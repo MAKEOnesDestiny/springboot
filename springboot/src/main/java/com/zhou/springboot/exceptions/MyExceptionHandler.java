@@ -35,7 +35,6 @@ public class MyExceptionHandler{
     private JSONObject analysisBody(HttpServletRequest request){
         String str = getBodyFromRequest(request);
         if(StringUtils.isEmpty(str)){
-            log.error("传入body的字符串为空");
             return null;
         }
         return JSONObject.parseObject(str);
