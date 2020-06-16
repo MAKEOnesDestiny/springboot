@@ -4,9 +4,11 @@ package com.zhou.springboot.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.zhou.springboot.controller.wirecollection.InterfaceTest;
 import com.zhou.springboot.dao.TestMapper;
+import com.zhou.springboot.dubbo.ServiceBeanInterface;
 import com.zhou.springboot.model.Result;
 import com.zhou.springboot.model.TestMap;
 import lombok.extern.log4j.Log4j2;
+import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +33,9 @@ public class JsonObjectController {
     @Autowired
     private TestMapper testMapper;
 
+    @Reference
+    private ServiceBeanInterface serviceBeanInterface;
+
     @PostMapping("/test1")
     public JSONObject test1(@RequestBody JSONObject jsonObject, HttpServletRequest request){
         testMapper.selectModultIdByUserLoginId("1");
@@ -48,4 +53,8 @@ public class JsonObjectController {
         return "OK";
     }
 
+    @PostMapping("/dubbo")
+    public String testDubbo(){
+        return serviceBeanInterface.doService();
+    }
 }
