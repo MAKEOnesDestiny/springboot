@@ -1,5 +1,6 @@
 package com.zhou.springboot.leetcode;
 
+import java.util.HashMap;
 import java.util.Stack;
 
 @SuppressWarnings("all")
@@ -94,7 +95,7 @@ public class Leetcode5 {
     }
 
 
-    class Solution {
+    class Solution44 {
         public boolean exist(char[][] board, String word) {
             if (board == null || board[0] == null || board.length == 0 || board[0].length == 0 || word == null || word.equals("")) {
                 return false;
@@ -174,10 +175,89 @@ public class Leetcode5 {
 
     }
 
+    static class Solution5 {
+        public int reverse(int x) {
+//            Stack<Integer> stack = new Stack<>();
+            long result = 0;
+            while (x != 0) {
+                result = result * 10 + (x % 10);
+                x = x / 10;
+            }
+            return ((int) result == result) ? (int) result : 0;
+        }
+    }
+
+    //11。盛最多水的容器
+    static class Solution6 {
+        public int maxArea(int[] height) {
+            int i = 0, j = height.length - 1;
+            int maxArea = Math.min(height[i], height[j]);
+            while(i<j){
+                if(height[i]>height[j]){
+                    j--;
+                    maxArea = Math.max(maxArea, (j - i) * Math.min(height[i], height[j]));
+                }else{
+                    i++;
+                    maxArea = Math.max(maxArea, (j - i) * Math.min(height[i], height[j]));
+                }
+            }
+            return maxArea;
+        }
+    }
+
+    static class MyObj{
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+    }
 
     public static void main(String[] args) {
-        char[][] c = {{'C', 'A', 'A'}, {'A', 'A', 'A'}, {'B', 'C', 'D'}};
-//        char[][] c = {{'C','1','2'},{'A','A','1'},{'B','C','D'}};
-//        System.out.println(new Solution9().exist(c, "AAB"));
+        HashMap map = new HashMap();
+        for (int i = 0; i < 100; i++) {
+            map.put(new MyObj(),1);
+        }
+        map.get(new MyObj());
+        System.out.println();
+        
+//        int[] t = new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7};
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

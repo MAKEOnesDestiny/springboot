@@ -88,8 +88,8 @@ public class LRUCache {
         System.out.println(cache.get("4"));       // 返回  4
     }
 
-
-   static  class CQueue {
+    //用两个栈实现队列
+    static  class CQueue {
 
         Stack<Integer> stack1 = new Stack();
         Stack<Integer> stack2 = new Stack();
