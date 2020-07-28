@@ -4,7 +4,12 @@ spring:
     password: root
     username: root
     driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: 127.0.0.1
+    cluster: 127.0.0.1:7000,127.0.0.1:7001,127.0.0.1:7002,127.0.0.1:7003,127.0.0.1:7004,127.0.0.1:7005
 server:
   servlet:
     context-path: /demo
-  port: 80
+  port: 8000
+
+

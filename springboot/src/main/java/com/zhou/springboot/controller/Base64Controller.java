@@ -44,8 +44,6 @@ public class Base64Controller {
         System.out.println(1);
     }
 
-    @Autowired
-    private TestMapper testMapper;
 
     @PostMapping(value = "/exception")
     @ResponseBody
@@ -70,7 +68,6 @@ public class Base64Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        log.info("获取输入流中的数据为{}", data);
         return data;
     }
 
@@ -88,7 +85,6 @@ public class Base64Controller {
         ByteArrayOutputStream bos = new ByteArrayOutputStream(length);
         while ((count = inputStream.read(bytes)) != -1) {
             bos.write(bytes);
-            log.info("正在读取数据中...");
         }
         bytes = null;
         return new String(bytes);

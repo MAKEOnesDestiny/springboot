@@ -1,9 +1,39 @@
-package strategic.support.utilities;
+package com.zhou.springboot.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public abstract class JSONUtil {
+
+    public static <T> List<T> findAllObjectRecursive(String key, Map<String, Object> map, Class<T> tClass) {
+        if (map == null) throw new IllegalArgumentException("map can't be null");
+        if (tClass == null) throw new IllegalArgumentException("tClass can't be null");
+        //不支持数组类型的检索
+        if (tClass.getName().startsWith("["))
+            throw new UnsupportedOperationException(tClass.getName() + " not supported!");
+        tClass = adaptPrimitive(tClass);
+        List<T> result = new ArrayList<>();
+        findAllObjectRecursive0(key, map, tClass,result);
+        return result;
+    }
+
+    private static <T> void findAllObjectRecursive0(String key, Map<String, Object> map, Class<T> tClass,
+                                                    List<T> result) {
+        Object obj = map.get(key);
+        if (obj != null && tClass.isAssignableFrom(obj.getClass()) && key != null) {
+            result.add((T)obj);
+        }
+        for (Map.Entry e : map.entrySet()) {
+            Object eValue = e.getValue();
+            if (eValue instanceof Map) {
+                findAllObjectRecursive0(key, (Map<String, Object>) eValue, tClass,result);
+            }
+            if (eValue instanceof List) {
+                findAllObjectRecursiveFromList(key, (List) eValue, tClass,result);
+            }
+        }
+    }
 
     public static <T> T findObjectRecursive(String key, Map<String, Object> map, Class<T> tClass) {
         if (map == null) throw new IllegalArgumentException("map can't be null");
@@ -62,6 +92,22 @@ public abstract class JSONUtil {
             }
         }
         return null;
+    }
+
+    public static <T> void findAllObjectRecursiveFromList(String key, List list, Class<T> tClass,List<T> result) {
+        if (list == null) throw new IllegalArgumentException("list can't be null");
+        if (list.size() == 0) return ;
+        for (Object obj : list) {
+            if (key == null && tClass.isAssignableFrom(obj.getClass())) {
+                result.add((T)obj);
+            }
+            if (List.class.isAssignableFrom(obj.getClass())) {
+                findAllObjectRecursiveFromList(key, (List) obj, tClass,result);
+            }
+            if (Map.class.isAssignableFrom(obj.getClass())) {
+                findAllObjectRecursive0(key, (Map<String, Object>) obj, tClass,result);
+            }
+        }
     }
 
     private static <T> Class<T> adaptPrimitive(Class<T> clazz) {
