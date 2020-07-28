@@ -31,7 +31,6 @@ public class NettyServerTest {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
-
                                 .addLast(new ChannelReponseHandler()); //in
 //                                .addLast(new TestTCCountHandler()); //out
 //                                .addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 10));
