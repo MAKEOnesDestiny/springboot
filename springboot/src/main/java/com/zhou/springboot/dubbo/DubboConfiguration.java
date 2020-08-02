@@ -6,8 +6,8 @@ import org.apache.dubbo.registry.Registry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-@EnableDubbo(scanBasePackages = "com.zhou.springboot.dubbo")
+//@Configuration
+//@EnableDubbo(scanBasePackages = "com.zhou.springboot.dubbo")
 public class DubboConfiguration {
 
     @Bean

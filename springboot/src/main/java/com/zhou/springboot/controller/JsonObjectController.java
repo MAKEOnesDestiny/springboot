@@ -33,8 +33,8 @@ public class JsonObjectController {
     @Autowired
     private TestMapper testMapper;
 
-    @Reference
-    private ServiceBeanInterface serviceBeanInterface;
+//    @Reference
+//    private ServiceBeanInterface serviceBeanInterface;
 
     @PostMapping("/test1")
     public JSONObject test1(@RequestBody JSONObject jsonObject, HttpServletRequest request){
@@ -53,8 +53,8 @@ public class JsonObjectController {
         return "OK";
     }
 
-    @PostMapping("/dubbo")
-    public String testDubbo(){
-        return serviceBeanInterface.doService();
-    }
+//    @PostMapping("/dubbo")
+//    public String testDubbo(){
+//        return serviceBeanInterface.doService();
+//    }
 }

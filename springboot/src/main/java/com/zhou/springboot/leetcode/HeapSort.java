@@ -1,6 +1,25 @@
 package com.zhou.springboot.leetcode;
 
+import com.zhou.springboot.leetcode.Leetcode7.Solution;
+
 public class HeapSort {
+
+    public class TreeNode {
+
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {}
+
+        TreeNode(int val) { this.val = val; }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
 
     private static void heapSort(Integer[] a) {
         for (int i = a.length / 2 - 1; i >= 0; i--) { // 从a.length/2开始，因为这些节点都是有子节点的节点

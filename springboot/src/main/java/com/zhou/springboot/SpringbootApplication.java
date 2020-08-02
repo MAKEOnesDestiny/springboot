@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-//exclude = {DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class}
-@SpringBootApplication(scanBasePackages = "com.zhou.springboot.controller")
+@SpringBootApplication(scanBasePackages = {"com.zhou.springboot.controller","com.zhou.springboot.model","com.zhou.springboot.dao"})
 @RestController
 @RequestMapping("/springboot")
 @MapperScan(value = "com.zhou.springboot.dao")

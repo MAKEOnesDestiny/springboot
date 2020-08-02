@@ -214,7 +214,7 @@ public class Leetcode6 {
     }
 
     //机器人的运动范围
-    static class Solution {
+    static class Solution6 {
 
         public int movingCount(int m, int n, int k) {
             int[][] used = new int[m][n];
@@ -232,11 +232,82 @@ public class Leetcode6 {
 
     }
 
+    //把数字翻译成字符串
+    class Solution7 {
+
+        public int translateNum(int num) {
+            if (num <= 9) {
+                return 1;
+            }
+            int ba = num % 100;
+            if (ba >= 26 || ba <= 9) {
+                return translateNum(num / 10);
+            } else {
+                return translateNum(num / 10) + translateNum(num / 100);
+            }
+        }
+    }
+
+    //数字序列中某一位的数字
+    static class Solution8 {
+
+        public int findNthDigit(int n) {
+            long sum = 0;
+            long start = 1;
+            int i = 1;
+            while (sum + i * 9 * start < n) {
+                sum = sum + i * 9 * start;
+                start *= 10;
+                i++;
+            }
+            int a = (int) ((n - sum) / i);
+            int b = (int) ((n - sum) % i);
+            long num = start + a;
+            if (b == 0) {
+                return (int) ((num - 1) % 10);
+            }
+            for (int j = 0; j < i - b; j++) {
+                num /= 10;
+            }
+            return (int) (num % 10);
+        }
+    }
+
+
+    //数字序列中某一位的数字
+    static class Solution {
+
+        public int findNthDigit(int n) {
+            long start = 1;
+            long sum = 0;
+            int i = 1;
+            while ((sum + 9 * start * i) < n) {
+                sum += 9 * start * i;
+                i++;
+                start *= 10;
+            }
+            //i代表几位数 start代表10的i次幂
+            int a = (int) ((n - sum - 1) / i); //往后数几个数字
+            int b = (int) ((n - sum) % i); //一个数字中的偏移量
+            long num = start + a;
+            if (b == 0) {
+                //代表一个数字中的最低位
+                return (int) (num % 10);
+            } else {
+                for (int j = 0; j < i - b; j++) {
+                    num = num / 10;
+                }
+                return (int) (num % 10);
+            }
+        }
+    }
+
 
     public static void main(String[] args) throws InterruptedException {
         //        int[] nums = new int[]{2, 2, 2, 0, 1};
-
-        System.out.println(new Solution().movingCount(1,2,1));
+        System.out.println(new Solution().findNthDigit(1000000000));
+        System.out.println(new Solution8().findNthDigit(1000000000));
+        //        System.out.println(new Solution().movingCount(1, 2, 1));
     }
 
 }

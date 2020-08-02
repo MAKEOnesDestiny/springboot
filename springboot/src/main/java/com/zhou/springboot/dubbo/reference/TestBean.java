@@ -5,7 +5,7 @@ import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class TestBean {
 
     @Reference
