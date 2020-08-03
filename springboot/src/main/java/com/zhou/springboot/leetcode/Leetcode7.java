@@ -139,7 +139,7 @@ public class Leetcode7 {
     }
 
     //["h","e","l","l","o"]
-    static class Solution {
+    static class Solution4 {
 
         public void reverseString(char[] s) {
             char temp;
@@ -151,11 +151,120 @@ public class Leetcode7 {
         }
     }
 
+    //反转字符串中的单词 III
+    static class Solution5 {
+
+        public String reverseWords(String s) {
+            String[] ss = s.split(" ");
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < ss.length; i++) {
+                sb.append(new StringBuilder(ss[i]).reverse());
+                if (i != ss.length - 1) {
+                    sb.append(" ");
+                }
+            }
+            return sb.toString();
+        }
+
+
+    }
+
+    //括号生成-错误做法
+    static class Solution60 {
+
+        public List<String> generateParenthesis(int n) {
+            List<String> result = new ArrayList<>();
+            recursive(n, n, result);
+            return result;
+        }
+
+        public List<String> recursive(int m, int n, List<String> list) {
+            if (m == 1) {
+                return new ArrayList<String>() {{
+                    add("()");
+                }};
+            }
+            for (int i = 1; i < m; i++) {
+                String left = "";
+                String right = "";
+                for (int j = 0; j < i; j++) {
+                    left += "(";
+                    right += ")";
+                }
+                List<String> sub = recursive(m - i, n, list);
+                if (m == n) {
+                    for (String ss : sub) {
+                        list.add(left + right + ss);
+                        list.add(left + ss + right);
+                    }
+                    continue;
+                } else {
+                    List<String> moreSub = new ArrayList<>();
+                    for (int j = 0; j < sub.size(); j++) {
+                        moreSub.add(left + right + sub.get(j));
+                        moreSub.add(left + sub.get(j) + right);
+                    }
+                    return moreSub;
+                }
+            }
+            return new ArrayList<String>();
+        }
+    }
+
+    //括号生成
+    static class Solution61 {
+
+        public List<String> generateParenthesis(int n) {
+            List<String> list = new ArrayList<>();
+            recursive("", 0, 0, n, list);
+            return list;
+        }
+
+        public void recursive(String s, int i, int j, int n, List<String> list) {
+            if (i > n || j > n || i < j) {
+                return;
+            }
+            if (i == n && j == n) {
+                list.add(s);
+                return;
+            }
+            recursive(s + "(", i + 1, j, n, list);
+            recursive(s + ")", i, j + 1, n, list);
+        }
+    }
+
+    //爬楼梯
+    static class Solution7 {
+
+        public int climbStairs(int n) {
+            if (n == 1 || n == 2) {
+                return n;
+            }
+            int[] cache = new int[n + 1];
+            cache[1] = 1;
+            cache[2] = 2;
+            return recursive(n, cache);
+        }
+
+        public int recursive(int n, int[] cache) {
+            if (n == 1 || n == 2) {
+                return cache[n];
+            }
+            if (cache[n] == 0) {
+                int n1 = recursive(n - 1, cache);
+                int n2 = recursive(n - 2, cache);
+                cache[n] = n1 + n2;
+            }
+            return cache[n];
+        }
+
+
+    }
+
 
     public static void main(String[] args) {
-        char[] s = new char[]{'h', 'e', 'l', 'l', 'o'};
-        new Solution().reverseString(s);
-        System.out.println();
+        //        char[] s = new char[]{'h', 'e', 'l', 'l', 'o'};
+        System.out.println(new Solution7().climbStairs(3));
     }
 
 
