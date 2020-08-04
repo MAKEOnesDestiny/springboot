@@ -1,10 +1,9 @@
 package com.zhou.springboot.leetcode;
 
-import com.zhou.springboot.leetcode.Leetcode7.Solution;
 
 public class HeapSort {
 
-    public class TreeNode {
+    public static class TreeNode {
 
         int val;
         TreeNode left;

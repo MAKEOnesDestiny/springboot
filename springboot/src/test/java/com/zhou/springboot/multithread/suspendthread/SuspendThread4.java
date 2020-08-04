@@ -35,10 +35,7 @@ public class SuspendThread4 extends Thread{
     }
 
     public static void main(String[] args) throws InterruptedException {
-        SuspendThread4 thread = new SuspendThread4(new Bean());
-        thread.start();
-        Thread.sleep(1000);
-        thread.getBean().printString();
+
     }
 
 }

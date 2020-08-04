@@ -27,15 +27,15 @@ public class SuspendThread extends Thread{
         Thread.sleep(5000);
 
         thread.suspend();
-        System.out.println("time1="+System.currentTimeMillis()+" i="+thread.getI());
+        System.out.println("time1="+System.currentTimeMillis()+" i="+thread.getId());
         Thread.sleep(5000);
-        System.out.println("time1="+System.currentTimeMillis()+" i="+thread.getI());
+        System.out.println("time1="+System.currentTimeMillis()+" i="+thread.getId());
         thread.resume();
         Thread.sleep(5000);
         thread.suspend();
-        System.out.println("time2="+System.currentTimeMillis()+" i="+thread.getI());
+        System.out.println("time2="+System.currentTimeMillis()+" i="+thread.getId());
         Thread.sleep(5000);
-        System.out.println("time2="+System.currentTimeMillis()+" i="+thread.getI());
+        System.out.println("time2="+System.currentTimeMillis()+" i="+thread.getId());
         thread.resume();
     }
 
