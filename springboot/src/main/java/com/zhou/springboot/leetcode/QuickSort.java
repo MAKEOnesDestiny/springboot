@@ -4,6 +4,9 @@ public class QuickSort {
 
     //快速排序
     //时间复杂度 O(nlogn)~O(n)
+    //不稳定
+    //额外空间O(nlogn)
+    //n较大时比较好
     void quicksort(Integer[] a, int left, int right) {
         if ((right - left) > 3) {
             Integer pivot = median3(a, left, right);
@@ -63,6 +66,8 @@ public class QuickSort {
             a[j] = temp;
         }
     }
+
+
 
     public static void main(String[] args) {
         Integer[] a = new Integer[]{50, 10, 90, 30, 70, 40, 80, 60, 20};

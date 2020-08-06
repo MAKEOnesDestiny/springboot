@@ -15,8 +15,13 @@ public class RedisTest {
     RedisTemplate redisTemplate;
 
     @Test
-    public void test(){
-        redisTemplate.opsForValue().set("spring","test");
+    public void test() {
+        redisTemplate.opsForValue().set("spring", "test");
+    }
+
+    @Test
+    public void testCPU() {
+        System.out.println(Runtime.getRuntime().availableProcessors());
     }
 
 }
