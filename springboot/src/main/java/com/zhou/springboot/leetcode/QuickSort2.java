@@ -30,7 +30,7 @@ public class QuickSort2 {
         if (q > start) {
             quicksort(a, start, q - 1);
         }
-        if(q<end){
+        if (q < end) {
             quicksort(a, q + 1, end);
         }
     }

@@ -1,6 +1,12 @@
 package com.zhou.springboot.leetcode;
 
 
+/**
+ * 堆排序
+ *  * 平均时间复杂度O(nlogn)
+ *  * 最差时间复杂度O(nlogn)
+ *  * 不稳定的排序
+ */
 public class HeapSort {
 
     public static class TreeNode {
