@@ -26,7 +26,9 @@ public class HeapSort {
         }
     }
 
+    //最小堆
     private static void heapSort(Integer[] a) {
+        //构造初始堆,从第一个非叶子节点开始调整,左右孩子节点中较大的交换到父节点中
         for (int i = a.length / 2 - 1; i >= 0; i--) { // 从a.length/2开始，因为这些节点都是有子节点的节点
             precDown(a, i, a.length);
         }
@@ -36,6 +38,7 @@ public class HeapSort {
         }
     }
 
+    //i代表，n代表长度
     private static void precDown(Integer[] a, int i, int n) {
         int child;
         Integer temp;
