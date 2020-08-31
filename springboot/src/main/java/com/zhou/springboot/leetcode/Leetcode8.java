@@ -1,6 +1,9 @@
 package com.zhou.springboot.leetcode;
 
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class Leetcode8 {
 
     public static class TreeNode {
@@ -117,7 +120,7 @@ public class Leetcode8 {
             ListNode p = head;
             ListNode t = n;
             while ((n = n.next) != null) {
-                if(n.val>p.val){
+                if (n.val > p.val) {
                     t.next = n;
 
                 }
@@ -128,7 +131,10 @@ public class Leetcode8 {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        Lock l = new ReentrantLock();
+        l.newCondition().await();
+
         ListNode node1 = new ListNode(4);
         ListNode node2 = new ListNode(2);
         ListNode node3 = new ListNode(1);

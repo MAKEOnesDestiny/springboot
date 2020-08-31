@@ -45,7 +45,7 @@ public class Base64Controller {
     }
 
 
-    @PostMapping(value = "/exception")
+    @RequestMapping(value = "/exception")
     @ResponseBody
     public String exceptionTest(@RequestBody TestBean data, HttpServletRequest request) {
         int a = 10 / 0;

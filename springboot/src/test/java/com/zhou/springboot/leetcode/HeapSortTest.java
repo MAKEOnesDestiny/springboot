@@ -2,7 +2,9 @@ package com.zhou.springboot.leetcode;
 
 public class HeapSortTest {
 
-
+    //堆排序
+    //不稳定
+    //o(nlogn)
     public static void heapSort(int[] is) {
         //构建初始堆
         for (int i = is.length / 2 - 1; i >= 0; i--) {

@@ -51,6 +51,7 @@ public class NettyClientTest {
     public static class A extends ByteToMessageCodec<ByteBuf> {
         @Override
         protected void encode(ChannelHandlerContext ctx, ByteBuf msg, ByteBuf out) throws Exception { //out
+            System.out.println("消息被encode了");
             out.writeBytes(msg);
         }
 

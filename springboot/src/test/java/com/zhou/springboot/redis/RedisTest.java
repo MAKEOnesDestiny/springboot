@@ -50,4 +50,36 @@ public class RedisTest {
         System.out.println(redisTemplate.opsForHash().keys("trans_rate_1"));
     }
 
+    //利用zset去实现页面访问统计
+    //zremrangebyscore  URL:/controller/test:60m  0 2020100202
+    //但是新增数据的(increby)比较不方便
+    //删除特别方便
+    @Test
+    public void clickCountUsingZSet() {
+        redisTemplate.opsForZSet().add("URL:/controller/test:60m", new HashSet<ZSetOperations.TypedTuple>() {{
+            //value代表统计数据，score代表时间
+            add(new DefaultTypedTuple("1", 2020100200d));
+            add(new DefaultTypedTuple("12", 2020100201d));
+            add(new DefaultTypedTuple("123", 2020100202d));
+            add(new DefaultTypedTuple("1234", 2020100203d));
+            add(new DefaultTypedTuple("12345", 2020100204d));
+        }});
+    }
+
+    //利用hash去实现页面访问统计
+    //URL  精度   时间点   count
+    //新增数据特别方便
+    //删除数据不方便
+    @Test
+    public void clickCountUsingHash() {
+        redisTemplate.opsForHash().putAll("URL:/controller/test:1h", new HashMap() {{
+            put("2020100200",10);
+            put("2020100201",100);
+            put("2020100202",1000);
+        }});
+        redisTemplate.opsForHash().increment("URL:/controller/test:1h","2020100202",1);
+        redisTemplate.opsForHash().increment("URL:/controller/test:1h","2020100302",1);
+    }
+
+
 }

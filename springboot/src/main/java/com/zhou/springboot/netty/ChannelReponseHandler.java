@@ -12,7 +12,6 @@ public class ChannelReponseHandler extends ChannelInboundHandlerAdapter implemen
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-//        ctx.writeAndFlush("我是来自服务端的响应消息");
         if (!ctx.channel().config().isAutoRead()) {
             System.out.println("服务端暂停");
             System.out.println(new Date());
