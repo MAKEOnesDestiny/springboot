@@ -18,6 +18,7 @@ public class InsertSort {
         }
     }
 
+    //更好的办法
     public static void insertSort2(int[] a) {
         int j;
         for (int i = 1; i < a.length; i++) {
