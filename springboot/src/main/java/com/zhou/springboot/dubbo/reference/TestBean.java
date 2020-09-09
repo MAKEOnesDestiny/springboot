@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 //@Component
 public class TestBean {
 
-    @Reference
+    @Reference()
     private ServiceBeanInterface service;
 
     public String test(){
