@@ -15,8 +15,5 @@ public enum EnumTest implements TestMapper {
         return null;
     }
 
-    public static void main(String[] args) {
-
-    }
 
 }

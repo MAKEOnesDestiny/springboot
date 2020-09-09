@@ -30,7 +30,7 @@ public class JsonObjectController {
     @Autowired
     private List<InterfaceTest> interfaceTests;
 
-    @Autowired
+//    @Autowired
     private TestMapper testMapper;
 
 //    @Reference

@@ -17,7 +17,7 @@ import java.util.Map;
 @RequestMapping("/mybatis")
 public class MybatisController {
 
-    @Autowired
+//    @Autowired
     private TestMapper testMapper;
 
     @GetMapping("/get")
