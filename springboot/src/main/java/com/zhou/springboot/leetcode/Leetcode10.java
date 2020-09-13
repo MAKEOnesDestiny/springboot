@@ -1,7 +1,5 @@
 package com.zhou.springboot.leetcode;
 
-import java.util.Arrays;
-
 @SuppressWarnings("all  ")
 public class Leetcode10 {
 
@@ -182,9 +180,89 @@ public class Leetcode10 {
 
     }
 
+    //输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。如果是则返回 true，否则返回 false。假设输入的数组的任意两个数字都互不相同。
+    //耗时太长！！！花了1个小时做
+    static class Solution5 {
+
+        public boolean verifyPostorder(int[] postorder) {
+            return recursive(postorder, 0, postorder.length - 1);
+        }
+
+        public boolean recursive(int[] postorder, int m, int n) {
+            if (m >= n) {
+                return true;
+            }
+            int index = m;
+            while (index < n) {
+                if (postorder[index] < postorder[n] && index + 1 < n) {
+                    index++;
+                } else {
+                    break;
+                }
+            }
+            int mid = index;
+            while (index < n) {
+                if (postorder[++index] < postorder[n]) {
+                    return false;
+                }
+            }
+            return recursive(postorder, m, mid) && recursive(postorder, m == mid ? mid : mid + 1, n - 1);
+        }
+
+    }
+
+
+    //请完成一个函数，输入一个二叉树，该函数输出它的镜像。
+    class Solution6 {
+
+        public TreeNode mirrorTree(TreeNode root) {
+            recursive(root);
+            return root;
+        }
+
+        public void recursive(TreeNode root) {
+            if (root == null) {
+                return;
+            }
+            TreeNode temp = root.left;
+            root.left = root.right;
+            root.right = temp;
+            recursive(root.left);
+            recursive(root.right);
+        }
+    }
+
+
+    //二叉树层次遍历
+    class Solution {
+
+        public int[] levelOrder(TreeNode root) {
+            int[] res = new int[1000];
+            recursive(root, 0, res);
+            return res;
+        }
+
+        public void recursive(TreeNode node, int i, int[] res) {
+            if (node == null) {
+                return;
+            }
+            res[i] = node.val;
+            recursive(node.left, 2 * i + 1, res);
+            recursive(node.right, 2 * i + 2, res);
+        }
+    }
+
 
     public static void main(String[] args) {
-        int[] origin = new int[]{4, 5, 1, 6, 2, 7, 3};
+        //        int[] a = new int[]{1, 2, 5, 10, 6, 9, 4, 3};
+        //        int[] a = new int[]{4,6,7,5};
+        //        int[] a = new int[]{1, 2, 5, 10, 6, 9, 4, 3};
+        int[] a = new int[]{7, 4, 6, 5};
+        //        int[] a = new int[]{4, 8, 6, 12, 16, 14, 10};
+
+        System.out.println(new Solution5().verifyPostorder(a));
+
+/*        int[] origin = new int[]{4, 5, 1, 6, 2, 7, 3};
         int[] res = new Solution4().getLeastNumbers(origin, 4);
         Arrays.stream(res).forEach((t) -> {
             System.out.println(t);
@@ -194,7 +272,7 @@ public class Leetcode10 {
         //        int[] a = new int[]{2, 3, 1, 0, 2, 5, 3};
         int[] a = new int[]{3, 1, 2, 3};
         new Solution3().findRepeatNumber(a);
-        System.out.println();
+        System.out.println();*/
     }
 
 }
