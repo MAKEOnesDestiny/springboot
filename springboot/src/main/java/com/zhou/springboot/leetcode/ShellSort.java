@@ -1,5 +1,8 @@
 package com.zhou.springboot.leetcode;
 
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class ShellSort {
 
     /**
@@ -19,9 +22,15 @@ public class ShellSort {
     }
 
     public static void main(String[] args) {
+        AtomicInteger ai = new AtomicInteger(Integer.MAX_VALUE);
+        ai.incrementAndGet();
+        System.out.println();
+
+
         int[] a = new int[]{34, 8, 64, 51, 32, 21};
         shellSort(a);
         System.out.println();
+//        new ArrayList<>().stream().sorted()
     }
 
 }

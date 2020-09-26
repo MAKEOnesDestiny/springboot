@@ -12,6 +12,7 @@ public class MergeSort {
     public void sort(int[] a, int left, int right) {
         int mid = (left + right) / 2;  //left<=mid<right
         if (left < right) {
+            //递归sort，出来的数组是有序的
             sort(a, left, mid);
             sort(a, mid + 1, right);
             merge(a, left, mid, right);

@@ -148,7 +148,7 @@ public class Leetcode11 {
     }
 
     //剑指 Offer 22. 链表中倒数第k个节点
-    class Solution {
+    class Solution4 {
 
         public ListNode getKthFromEnd(ListNode head, int k) {
             ListNode first = null;
@@ -168,8 +168,38 @@ public class Leetcode11 {
         }
     }
 
+    //数组中重复的数字
+    //2,3,1,0,2,5,3
+    static class Solution {
+
+        public int findRepeatNumber(int[] nums) {
+            int length = nums.length;
+            int i = 0;
+            for (; ; ) {
+                if (i != nums[i]) {
+                    if (nums[i] == nums[nums[i]]) {
+                        return nums[i];
+                    }
+                    swap(nums, i, nums[i]);
+                } else {
+                    //return immediatly if equals
+                    i++;
+                }
+            }
+        }
+
+        public void swap(int[] nums, int m, int n) {
+            int temp = nums[m];
+            nums[m] = nums[n];
+            nums[n] = temp;
+        }
+    }
+
+
     public static void main(String[] args) {
-//        System.out.println(new Solution().missingNumber(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 9}));
+        int[] nums = new int[]{2, 3, 1, 0, 2, 5, 3};
+        new Solution().findRepeatNumber(nums);
+        //        System.out.println(new Solution().missingNumber(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 9}));
     }
 
 }
