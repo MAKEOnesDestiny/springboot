@@ -1,4 +1,4 @@
-package com.zhou.springboot.leetcode;
+package com.zhou.springboot.leetcode.sort;
 
 public class QuickSort {
 
