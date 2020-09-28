@@ -81,9 +81,6 @@ public class Offer51 {
     public static void main(String[] args) {
         int[] nums = new int[]{7, 5, 6, 4};
         System.out.println(new Solution2().reversePairs(nums));
-       /* Arrays.stream(nums).forEach((t) -> {
-            System.out.println(t);
-        });*/
     }
 
 }
