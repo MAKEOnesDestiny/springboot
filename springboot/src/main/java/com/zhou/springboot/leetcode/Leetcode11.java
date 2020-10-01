@@ -1,5 +1,9 @@
 package com.zhou.springboot.leetcode;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 @SuppressWarnings("all")
 public class Leetcode11 {
 
@@ -170,7 +174,7 @@ public class Leetcode11 {
 
     //数组中重复的数字
     //2,3,1,0,2,5,3
-    static class Solution {
+    static class Solution5 {
 
         public int findRepeatNumber(int[] nums) {
             int length = nums.length;
@@ -195,10 +199,61 @@ public class Leetcode11 {
         }
     }
 
+    //给定一个二叉树，返回它的 后序 遍历。
+    //迭代算法实现
+    static class Solution {
+
+        public List<Integer> postorderTraversal(TreeNode root) {
+            Stack<TreeNode> stack = new Stack<>();
+            List<Integer> res = new ArrayList<>();
+            TreeNode n = root;
+            TreeNode p = null; //p代表上一个
+            while (n != null || !stack.isEmpty()) {
+                while (n != null) {
+                    stack.push(n);
+                    n = n.left;
+                }
+                //n==null
+                n = stack.peek();
+                if (n.right == null || n.right == p) {
+                    //往上
+                    res.add(n.val);
+                    stack.pop();
+                    p = n;
+                    n = null;
+                } else {
+                    n = n.right;
+                }
+            }
+            return res;
+        }
+    }
+
+    static class TreeNode {
+
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
 
     public static void main(String[] args) {
-        int[] nums = new int[]{2, 3, 1, 0, 2, 5, 3};
-        new Solution().findRepeatNumber(nums);
+        TreeNode n1 = new TreeNode(1);
+        TreeNode n21 = new TreeNode(2);
+        TreeNode n22 = new TreeNode(3);
+        TreeNode n32 = new TreeNode(5);
+        TreeNode n33 = new TreeNode(6);
+        TreeNode n34 = new TreeNode(7);
+        n1.left = n21;
+        n1.right = n22;
+        n21.right = n32;
+        n22.left = n33;
+        n22.right = n34;
+        new Solution().postorderTraversal(n1).stream().forEach((t) -> System.out.println(t));
+
         //        System.out.println(new Solution().missingNumber(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 9}));
     }
 
