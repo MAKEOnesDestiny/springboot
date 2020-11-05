@@ -145,6 +145,12 @@
 		-->
 
 		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.1.23</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -293,6 +299,17 @@
 	</dependencies>
 
 	<build>
+<!--		<resources>
+			<resource>
+				<directory>src/main/resources</directory>&lt;!&ndash;所在的目录&ndash;&gt;
+				<includes>&lt;!&ndash;包括目录下的.properties,.xml文件都会扫描到&ndash;&gt;
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>-->
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

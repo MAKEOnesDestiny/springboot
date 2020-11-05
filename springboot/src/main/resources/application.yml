@@ -1,9 +1,9 @@
 spring:
   datasource:
-#    url: jdbc:mysql://localhost:3306/test
-#    password: 135246
-#    username: root
-#    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test
+    password: 123456
+    username: root
+    driver-class-name: com.mysql.jdbc.Driver
   redis:
     host: 127.0.0.1
     #cluster:
@@ -13,4 +13,6 @@ server:
     context-path: /demo
   port: 8000
 
+mybatis:
+  mapper-locations: classpath:/xml/TimeOutMapper.xml
 
