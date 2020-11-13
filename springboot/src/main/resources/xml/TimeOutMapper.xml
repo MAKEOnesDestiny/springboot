@@ -3,8 +3,24 @@
 <mapper namespace="com.zhou.springboot.dao.TimeOutMapper">
 
 	<!--timeout有用!-->
-	<select id="selectCount" resultType="int" timeout="2">
+	<select id="selectCount1" resultType="int" timeout="2">
 		select count(1) from test.time_out
 	</select>
+
+
+	<select id="selectTestTable" resultType="int">
+		select count(1) from test.test_table
+	</select>
+
+	<select id="testCdata" resultType="int">
+		<!--${sql}-->
+		select count(1) from test.test_table where id = #{bean.id}
+	</select>
+
+	<select id="testExplain" resultType="string">
+		select count(1) from test.test_table where id = 1
+	</select>
+
+
 
 </mapper>

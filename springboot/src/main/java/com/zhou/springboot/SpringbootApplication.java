@@ -2,9 +2,10 @@ package com.zhou.springboot;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.zhou.springboot.dao.TimeOutMapper;
+import com.zhou.springboot.mybatis.interceptor.CustomMybatisPlugin;
 import javax.sql.DataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.spring.annotation.MapperScan;
 
 
 @SpringBootApplication(scanBasePackages = {"com.zhou.springboot.controller", "com.zhou.springboot.model",
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 //                , DataSourceAutoConfiguration.class
 })
 @RestController
+//@MapperScan(value = "com.zhou.springboot.dao")
 @MapperScan(value = "com.zhou.springboot.dao")
 @PropertySource("classpath:/spring/dubbo-provider.properties")
 @ImportResource
@@ -35,10 +38,10 @@ public class SpringbootApplication implements EnvironmentAware {
         ApplicationContext applicationContext = SpringApplication
                 .run(SpringbootApplication.class, args);       //main entry
         TimeOutMapper tom = applicationContext.getBean(TimeOutMapper.class);
-        while(true) {
-            System.out.println(tom.selectCount());
+       /* while(true) {
+            System.out.println(tom.selectCount1());
             Thread.sleep(1000L);
-        }
+        }*/
         //        new ThreadTest();
         //        DispatcherServlet ds = applicationContext.getBean(DispatcherServlet.class);
         //        applicationContext.getBean("testMapper");

@@ -18,6 +18,7 @@ public class StreamTest {
         }};
         ll.add(l1);
         ll.add(l2);
+        //List<String> exists = list.stream().map((t) -> t.get("task_id")).map(String::valueOf).collect(Collectors.toList());
         String s = ll.stream().flatMap(List::stream).map(String::toString).collect(Collectors.joining(","));
         System.out.println(s);
 

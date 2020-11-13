@@ -1,23 +1,19 @@
 package com.zhou.springboot.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.zhou.springboot.dao.TestMapper;
 import com.zhou.springboot.model.TestBean;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Scanner;
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import java.io.*;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 /**
  * springboot学习
@@ -31,22 +27,99 @@ import java.lang.reflect.Proxy;
 @Lazy
 public class Base64Controller {
 
-    public static void main(String[] args) {
-        TestMapper mapper;
-        Object object = Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), new Class[]{TestMapper.class}, new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                return null;
+    //0,0,1,0,1,0,1,0,1,0,1,1,0,0,
+
+/*    @Test
+    public void test() {
+        //        int[] ss = new int[]{0,1,0,1,0,1,0};
+        Scanner in = new Scanner(System.in);
+        List list = new ArrayList();
+        while (in.hasNextInt()) {
+            list.add(in.nextInt());
+        }
+        System.out.println(list);
+
+        String maxS = "";
+        int prev = 0;
+        boolean valid = true;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < ss.length; i++) {
+            int a = ss[i];
+            if (a == 0 && prev == 0) {
+                if (valid && sb.length() > maxS.length() && sb.length() > 1) {
+                    maxS = sb.toString();
+                }
+                sb = new StringBuilder();
+                valid = true;
+            } else if (prev == 0 && a == 1) {
+                prev = 1;
+            } else if (prev == 1 && a == 0) {
+                prev = 0;
+            } else if (prev == 1 && a == 1) {
+                valid = false;
             }
-        });
-        mapper = (TestMapper) object;
-        mapper.selectModultIdByUserLoginId("1");
-        System.out.println(1);
+            sb.append(a);
+        }
+        if (valid && sb.length() > maxS.length() && sb.length() > 1) {
+            maxS = sb.toString();
+        }
+        System.out.println(maxS);
+    }*/
+
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int a = in.nextInt();
+        int b = in.nextInt();
+        //        int a = 525;
+        //        int b = 6;
+        int c = b * (b - 1) / 2;
+        int begin = (a - c) / b;
+        if ((begin * b) != (a - c)) {
+            System.out.println(-1);
+        } else {
+            for (int i = 0; i < b; i++) {
+                System.out.print(begin + i);
+                if (i != b - 1) {
+                    System.out.print(" ");
+                }
+            }
+        }
+    }
+
+    public static void main1(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String maxS = "0";
+        int prev = 0;
+        boolean valid = true;
+        StringBuilder sb = new StringBuilder();
+        while (in.hasNextInt()) {// 注意，如果输入是多个测试用例，请通过while循环处理多个测试用例
+            int a = in.nextInt();
+            if (a == 0 && prev == 0) {
+                if (valid && sb.length() > maxS.length() && sb.length() > 1) {
+                    maxS = sb.toString();
+                }
+                sb = new StringBuilder();
+                valid = true;
+            } else if (prev == 0 && a == 1) {
+                prev = 1;
+            } else if (prev == 1 && a == 0) {
+                prev = 0;
+            } else if (prev == 1 && a == 1) {
+                valid = false;
+            }
+            sb.append(a);
+        }
+        if (valid && sb.length() > maxS.length() && sb.length() > 1) {
+            maxS = sb.toString();
+        }
+        System.out.println(maxS.length() <= 1 ? "-1" : 0 + maxS);
     }
 
 
     @RequestMapping(value = "/exception")
     @ResponseBody
+    @Transactional
     public String exceptionTest(@RequestBody TestBean data, HttpServletRequest request) {
         int a = 10 / 0;
         return "end";
@@ -76,7 +149,6 @@ public class Base64Controller {
      *
      * @param inputStream
      * @param length
-     * @return
      * @throws IOException
      */
     private String getStreamData(InputStream inputStream, int length) throws IOException {
