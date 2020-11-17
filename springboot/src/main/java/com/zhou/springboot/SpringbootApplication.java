@@ -1,16 +1,11 @@
 package com.zhou.springboot;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.zhou.springboot.dao.TimeOutMapper;
-import com.zhou.springboot.mybatis.interceptor.CustomMybatisPlugin;
+import com.zhou.springboot.dao.TestBiz;
 import javax.sql.DataSource;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.cloud.CloudAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.EnvironmentAware;
@@ -25,11 +20,11 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication(scanBasePackages = {"com.zhou.springboot.controller", "com.zhou.springboot.model",
         "com.zhou.springboot.dao", "com.zhou.springboot"}
         , exclude = {CloudAutoConfiguration.class, EurekaClientAutoConfiguration.class
-//                , DataSourceAutoConfiguration.class
+        //                , DataSourceAutoConfiguration.class
 })
 @RestController
 //@MapperScan(value = "com.zhou.springboot.dao")
-@MapperScan(value = "com.zhou.springboot.dao")
+@MapperScan(value = "com.zhou.springboot.dao")  //tkmbatis重新写了mybatis的注解，并且加入了自己的逻辑再里面
 @PropertySource("classpath:/spring/dubbo-provider.properties")
 @ImportResource
 public class SpringbootApplication implements EnvironmentAware {
@@ -37,24 +32,28 @@ public class SpringbootApplication implements EnvironmentAware {
     public static void main(String[] args) throws InterruptedException {
         ApplicationContext applicationContext = SpringApplication
                 .run(SpringbootApplication.class, args);       //main entry
-        TimeOutMapper tom = applicationContext.getBean(TimeOutMapper.class);
-       /* while(true) {
-            System.out.println(tom.selectCount1());
-            Thread.sleep(1000L);
-        }*/
-        //        new ThreadTest();
-        //        DispatcherServlet ds = applicationContext.getBean(DispatcherServlet.class);
-        //        applicationContext.getBean("testMapper");
-        //        applicationContext.publishEvent(new MyEvent(new Object()));
+
 
     }
 
-/*    @Bean
-    public SqlSessionFactoryBean getSqlSessionFactory(@Autowired DataSource dataSource) {
-        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setDataSource(dataSource);
-        return bean;
-    }*/
+    public void testDealLock(ApplicationContext applicationContext) {
+        TestBiz testBiz = applicationContext.getBean(TestBiz.class);
+        new Thread(() -> {
+            try {
+                testBiz.testDeadLock(1, 2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        new Thread(() -> {
+            try {
+                testBiz.testDeadLock(2, 1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
 
     @Bean
     public DataSource druidDataSource() {

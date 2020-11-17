@@ -17,4 +17,8 @@ public interface TimeOutMapper extends Mapper<TimeOut> {
 
     String testExplain();
 
+    String selectById(@Param("id") Integer id);
+
+    void updateById(@Param("id") Integer id);
+
 }

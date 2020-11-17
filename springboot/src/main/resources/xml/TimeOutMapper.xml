@@ -21,6 +21,11 @@
 		select count(1) from test.test_table where id = 1
 	</select>
 
-
+	<select id="selectById" resultType="string">
+		select test_name from test.time_out where id = #{id}
+	</select>
+	<update id="updateById">
+		update  test.time_out set test_name='ceshi' where id = #{id}
+	</update>
 
 </mapper>
