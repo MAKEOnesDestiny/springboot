@@ -1,8 +1,13 @@
 package com.zhou.springboot.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class TimeOut {
 
-    private int id;
+    @Id
+    private Integer id;
 
     private String testName;
 

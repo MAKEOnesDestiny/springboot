@@ -42,10 +42,7 @@ public class JunitTest {
         System.out.println(timeOutMapper.testCdata(sql, 1L, bean));
     }
 
-    @Test
-    public void testExplain() {
-        System.out.println(timeOutMapper.testExplain());
-    }
+
 
 
     @Test

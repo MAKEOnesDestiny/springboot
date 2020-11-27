@@ -17,8 +17,8 @@
 		select count(1) from test.test_table where id = #{bean.id}
 	</select>
 
-	<select id="testExplain" resultType="string">
-		select count(1) from test.test_table where id = 1
+	<select id="testExplain" resultType="map">
+		explain select count(1) from test.time_out
 	</select>
 
 	<select id="selectById" resultType="string">
@@ -27,5 +27,9 @@
 	<update id="updateById">
 		update  test.time_out set test_name='ceshi' where id = #{id}
 	</update>
+
+	<insert id="insertTimeOut">
+		INSERT INTO time_out  ( id,test_name ) VALUES( #{t.id},#{t.testName})
+	</insert>
 
 </mapper>

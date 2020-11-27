@@ -9,7 +9,8 @@ public class ServiceBean implements ServiceBeanInterface {
     public String doService() {
         System.out.println("收到请求");
         try {
-            throw new RuntimeException();
+            return "我是springboot的服务";
+//            throw new RuntimeException();
 //            Thread.sleep(2000);
         } catch (Exception e) {
             e.printStackTrace();

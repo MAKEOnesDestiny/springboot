@@ -14,5 +14,10 @@ server:
   port: 8000
 
 mybatis:
-  mapper-locations: classpath:/xml/TimeOutMapper.xml
+  mapper-locations: classpath:/xml/*
+
+rocketmq:
+  name-server: 127.0.0.1:9876
+
+
 

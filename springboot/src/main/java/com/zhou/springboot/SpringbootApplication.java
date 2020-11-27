@@ -2,7 +2,15 @@ package com.zhou.springboot;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.zhou.springboot.dao.TestBiz;
+import com.zhou.springboot.dao.VersionBiz;
+import com.zhou.springboot.rocketmq.RocketMqTransTest;
+import com.zhou.springboot.rocketmq.RocketMqVersionTest;
+import java.io.UnsupportedEncodingException;
 import javax.sql.DataSource;
+import org.apache.rocketmq.client.exception.MQBrokerException;
+import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.remoting.exception.RemotingException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.cloud.CloudAutoConfiguration;
@@ -23,22 +31,37 @@ import tk.mybatis.spring.annotation.MapperScan;
         //                , DataSourceAutoConfiguration.class
 })
 @RestController
-//@MapperScan(value = "com.zhou.springboot.dao")
 @MapperScan(value = "com.zhou.springboot.dao")  //tkmbatis重新写了mybatis的注解，并且加入了自己的逻辑再里面
 @PropertySource("classpath:/spring/dubbo-provider.properties")
 @ImportResource
 public class SpringbootApplication implements EnvironmentAware {
 
-    public static void main(String[] args) throws InterruptedException {
-        ApplicationContext applicationContext = SpringApplication
+
+    public static void main(String[] args)
+            throws Exception {
+        ApplicationContext ac = SpringApplication
                 .run(SpringbootApplication.class, args);       //main entry
 
+        //        testTrans(ac);
+//        testVersionConsume(ac);
+    }
 
+
+    public static void testVersionConsume(ApplicationContext ac) throws MQClientException {
+        RocketMqVersionTest test = ac.getBean(RocketMqVersionTest.class);
+        test.consumeMessage();
+    }
+
+    public static void testTrans(ApplicationContext applicationContext)
+            throws InterruptedException, RemotingException, UnsupportedEncodingException, MQClientException, MQBrokerException {
+        RocketMqTransTest test = applicationContext.getBean(RocketMqTransTest.class);
+        test.test();
     }
 
     public void testDealLock(ApplicationContext applicationContext) {
         TestBiz testBiz = applicationContext.getBean(TestBiz.class);
         new Thread(() -> {
+
             try {
                 testBiz.testDeadLock(1, 2);
             } catch (InterruptedException e) {

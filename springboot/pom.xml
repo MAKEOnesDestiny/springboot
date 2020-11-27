@@ -305,6 +305,18 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-spring-boot-starter -->
+		<dependency>
+			<groupId>org.apache.rocketmq</groupId>
+			<artifactId>rocketmq-spring-boot-starter</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba.boot</groupId>
+			<artifactId>nacos-config-spring-boot-starter</artifactId>
+			<version>0.2.6</version>
+		</dependency>
 
 		<!--
 						<dependency>
@@ -312,8 +324,6 @@
 								<artifactId>mockito-all</artifactId>
 						</dependency>
 		-->
-
-
 	</dependencies>
 
 	<build>

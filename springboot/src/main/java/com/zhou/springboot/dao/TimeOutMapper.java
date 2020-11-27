@@ -1,6 +1,7 @@
 package com.zhou.springboot.dao;
 
 import com.zhou.springboot.bean.TimeOut;
+import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
@@ -15,10 +16,12 @@ public interface TimeOutMapper extends Mapper<TimeOut> {
 
     int testCdata(@Param("sql") String sql, @Param("id") long id, @Param("bean") OgnlBean bean);
 
-    String testExplain();
+    Map testExplain();
 
     String selectById(@Param("id") Integer id);
 
     void updateById(@Param("id") Integer id);
+
+    void insertTimeOut(@Param("t")TimeOut timeOut);
 
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.springboot.dao.VersionTestMapper">
+
+	<!--timeout有用!-->
+	<update id="updateByKey">
+		update test.version_test set seq=#{value} where id = #{id}
+	</update>
+
+	<update id="updateByKeyVersion">
+		update test.version_test set seq=#{value},version=#{version} where id = #{id} and version &lt;=#{version}
+	</update>
+
+
+
+
+</mapper>
