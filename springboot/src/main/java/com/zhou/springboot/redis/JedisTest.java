@@ -1,16 +1,15 @@
 package com.zhou.springboot.redis;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Response;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 public class JedisTest {
 
-    public static void main(String[] args) throws Exception {
+    public static void test() throws ExecutionException, InterruptedException {
         RedisClusterConfig config = new RedisClusterConfig("127.0.0.1:7000", "127.0.0.1:7001", "127.0.0.1:7002"
                 , "127.0.0.1:7003", "127.0.0.1:7004", "127.0.0.1:7005");
         RedirectExecuteFactory factory = new RedirectExecuteFactory(config);
@@ -24,14 +23,22 @@ public class JedisTest {
                 Response res3 = pipeline.ltrim("recent:", 0, 3);
                 pipeline.sync();
                 return res1;
-//                return new ResponseComposition(new ArrayList<Response>() {{
-//                    add(res1);
-//                    add(res2);
-//                    add(res3);
-//                }});
+                //                return new ResponseComposition(new ArrayList<Response>() {{
+                //                    add(res1);
+                //                    add(res2);
+                //                    add(res3);
+                //                }});
             }
         });
         System.out.println(result);
+    }
+
+    public static void main(String[] args) throws Exception {
+        Jedis jedis = new Jedis();
+        Long begin = System.currentTimeMillis();
+        String s = jedis.get("20200422090000:55:193310865");
+        Long end = System.currentTimeMillis();
+        System.out.println(end - begin);
     }
 
     static class LogRetryRun extends RedirectExecuteFactory.RetryRun<Object> {
@@ -41,7 +48,7 @@ public class JedisTest {
             Pipeline pipeline = jedis.pipelined();
             Response response1 = pipeline.zadd("slowest:AccessTime", 15.1, "首页1");
             Response response2 = pipeline.zremrangeByRank("slowest:AccessTime", 0, -101); //
-//                Response<List<Object>> response = pipeline.exec();
+            //                Response<List<Object>> response = pipeline.exec();
             pipeline.sync();
             return response1;
         }
@@ -70,7 +77,8 @@ public class JedisTest {
 
         public static final String[] city = new String[]{"hangzhou", "beijing", "shanghai", "taizhou"};
 
-        public static final String[] city_info = new String[]{"{'name':'aaa'}", "{'name':'bbb'}", "{'name':'ccc'}", "{'name':'ddd'}"};
+        public static final String[] city_info = new String[]{"{'name':'aaa'}", "{'name':'bbb'}", "{'name':'ccc'}",
+                "{'name':'ddd'}"};
 
         @Override
         public Response<Long> doRun(Jedis jedis) {
