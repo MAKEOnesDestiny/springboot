@@ -22,6 +22,11 @@ public interface TimeOutMapper extends Mapper<TimeOut> {
 
     void updateById(@Param("id") Integer id);
 
-    void insertTimeOut(@Param("t")TimeOut timeOut);
+    void insertTimeOut(@Param("t") TimeOut timeOut);
 
+    void lockTable();
+
+    void unlockTable();
+
+    void rename(@Param("original") String original, @Param("target") String target);
 }

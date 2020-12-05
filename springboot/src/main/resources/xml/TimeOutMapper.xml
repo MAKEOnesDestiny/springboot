@@ -32,4 +32,16 @@
 		INSERT INTO time_out  ( id,test_name ) VALUES( #{t.id},#{t.testName})
 	</insert>
 
+	<update id="lockTable">
+		lock tables test.time_out read;
+	</update>
+
+	<update id="unlockTable">
+		unlock tables;
+	</update>
+
+	<update id="rename">
+		rename table test.${original} to test.${target};
+	</update>
+
 </mapper>

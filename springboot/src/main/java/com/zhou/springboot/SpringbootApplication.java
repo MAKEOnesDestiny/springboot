@@ -2,7 +2,7 @@ package com.zhou.springboot;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.zhou.springboot.dao.TestBiz;
-import com.zhou.springboot.dao.VersionBiz;
+import com.zhou.springboot.dao.TimeOutMapper;
 import com.zhou.springboot.rocketmq.RocketMqTransTest;
 import com.zhou.springboot.rocketmq.RocketMqVersionTest;
 import java.io.UnsupportedEncodingException;
@@ -10,7 +10,6 @@ import javax.sql.DataSource;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.remoting.exception.RemotingException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.cloud.CloudAutoConfiguration;
@@ -42,8 +41,36 @@ public class SpringbootApplication implements EnvironmentAware {
         ApplicationContext ac = SpringApplication
                 .run(SpringbootApplication.class, args);       //main entry
 
+        //        testHATable(ac);
         //        testTrans(ac);
-//        testVersionConsume(ac);
+        //        testVersionConsume(ac);
+        //        testDealLock(ac);
+    }
+
+    public static void testHATable2(ApplicationContext ac) throws InterruptedException {
+        TimeOutMapper mapper = ac.getBean(TimeOutMapper.class);
+        TestBiz testBiz = ac.getBean(TestBiz.class);
+
+        testBiz.doRename1();
+        System.out.println("迁移成功");
+    }
+
+    public static void testHATable(ApplicationContext ac) throws InterruptedException {
+        TimeOutMapper mapper = ac.getBean(TimeOutMapper.class);
+        TestBiz testBiz = ac.getBean(TestBiz.class);
+        //不能开启事务，如果开启事务则会导致commit的时候隐式释放锁
+        mapper.lockTable();
+        System.out.println("加锁成功");
+
+        //模拟同步数据操作
+        Thread.sleep(7 * 1000);
+
+        testBiz.doRename();
+        System.out.println("更改表名成功");
+        //        Thread.sleep(7 * 1000);
+
+        //        mapper.unlockTable();
+
     }
 
 
@@ -58,7 +85,7 @@ public class SpringbootApplication implements EnvironmentAware {
         test.test();
     }
 
-    public void testDealLock(ApplicationContext applicationContext) {
+    public static void testDealLock(ApplicationContext applicationContext) {
         TestBiz testBiz = applicationContext.getBean(TestBiz.class);
         new Thread(() -> {
 
