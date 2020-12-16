@@ -1,6 +1,8 @@
 package com.zhou.springboot.dao;
 
+import com.zhou.springboot.bean.HasbaniSynsLog;
 import com.zhou.springboot.bean.TimeOut;
+import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -29,4 +31,7 @@ public interface TimeOutMapper extends Mapper<TimeOut> {
     void unlockTable();
 
     void rename(@Param("original") String original, @Param("target") String target);
+
+    List<String> selectLog(@Param("tables") String tableNames, @Param("size") Integer size);
+
 }

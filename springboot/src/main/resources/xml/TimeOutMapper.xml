@@ -44,4 +44,26 @@
 		rename table test.${original} to test.${target};
 	</update>
 
+
+	<select id="selectLog" resultType="string">
+		select res.date
+		from
+				 (
+				 select t.date,count(t.date) as c
+				 from(
+						 select distinct substr(task_stamp,1,8) as date,SUBSTRING_INDEX(task_dst,'.',-1) as tableName
+						 from test.hasbani_syns_log
+						 where delta_cnt>0 and
+									 find_in_set(SUBSTRING_INDEX(task_dst,'.',-1),#{tables})) t
+							 join
+							 (select distinct substr(task_stamp,1,8) as date
+								from test.hasbani_syns_log
+								where delta_cnt>0 and
+											find_in_set(SUBSTRING_INDEX(task_dst,'.',-1),#{tables})) d
+							 on d.date=t.date
+				 group by date
+				 ) res
+		where c=${size}
+	</select>
+
 </mapper>
