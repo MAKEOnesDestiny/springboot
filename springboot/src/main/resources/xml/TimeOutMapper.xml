@@ -63,7 +63,7 @@
 							 on d.date=t.date
 				 group by date
 				 ) res
-		where c=${size}
+		where c>0
 	</select>
 
 </mapper>
