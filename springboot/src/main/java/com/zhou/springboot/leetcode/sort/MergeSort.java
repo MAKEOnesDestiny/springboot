@@ -7,6 +7,7 @@ package com.zhou.springboot.leetcode.sort;
  * 稳定的排序
  * 需要线性附加内存
  */
+@SuppressWarnings("all")
 public class MergeSort {
 
     public void sort(int[] a, int left, int right) {
@@ -20,6 +21,7 @@ public class MergeSort {
         //do nothing if left = right
     }
 
+    //在这个方法里面,mid是在左边区间的
     public void merge(int[] a, int left, int mid, int right) {
         int i = left, j = mid + 1;
         int[] temp = new int[right - left + 1];
@@ -37,6 +39,7 @@ public class MergeSort {
         while (j <= right) {
             temp[k++] = a[j++];
         }
+        //复制回去
         for (int l = 0; l < k; l++) {
             a[l + left] = temp[l];
         }
