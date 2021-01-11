@@ -1,9 +1,15 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/test
-    password: 135246
     username: root
+    password: 135246
     driver-class-name: com.mysql.jdbc.Driver
+
+  datasource2:
+    url: jdbc:presto://localhost:8080
+    username: root
+    password:
+    driver-class-name: com.facebook.presto.jdbc.PrestoDriver
   redis:
     host: 127.0.0.1
     #cluster:

@@ -1,5 +1,6 @@
 package com.zhou.springboot.dao;
 
+import com.zhou.springboot.mybatis.config.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,13 @@ public class TestBiz {
     private TimeOutMapper timeOutMapper;
 
     public static final Long sleep = 3000L;
+
+    @DataSource("presto")
+    public void testPresto(){
+        Integer res = timeOutMapper.testPresto();
+        System.out.println(res);
+    }
+
 
 //    @Transactional
     public void testDeadLock(Integer id1, Integer id2) throws InterruptedException {

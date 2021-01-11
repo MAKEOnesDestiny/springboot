@@ -1,12 +1,10 @@
 package com.zhou.springboot;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.zhou.springboot.dao.TestBiz;
 import com.zhou.springboot.dao.TimeOutMapper;
 import com.zhou.springboot.rocketmq.RocketMqTransTest;
 import com.zhou.springboot.rocketmq.RocketMqVersionTest;
 import java.io.UnsupportedEncodingException;
-import javax.sql.DataSource;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.remoting.exception.RemotingException;
@@ -16,7 +14,6 @@ import org.springframework.boot.autoconfigure.cloud.CloudAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.EnvironmentAware;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -40,6 +37,8 @@ public class SpringbootApplication implements EnvironmentAware {
             throws Exception {
         ApplicationContext ac = SpringApplication
                 .run(SpringbootApplication.class, args);       //main entry
+        TestBiz testBiz = ac.getBean(TestBiz.class);
+        testBiz.testPresto();
 
         //        testHATable(ac);
         //        testTrans(ac);
@@ -102,16 +101,6 @@ public class SpringbootApplication implements EnvironmentAware {
                 e.printStackTrace();
             }
         }).start();
-    }
-
-
-    @Bean
-    public DataSource druidDataSource() {
-        DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUrl(environment.getProperty("spring.datasource.url"));
-        dataSource.setUsername(environment.getProperty("spring.datasource.username"));
-        dataSource.setPassword(environment.getProperty("spring.datasource.password"));
-        return dataSource;
     }
 
     private Environment environment;

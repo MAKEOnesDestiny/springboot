@@ -34,4 +34,6 @@ public interface TimeOutMapper extends Mapper<TimeOut> {
 
     List<String> selectLog(@Param("tables") String tableNames, @Param("size") Integer size);
 
+    Integer testPresto();
+
 }

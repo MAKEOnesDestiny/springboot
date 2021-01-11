@@ -66,4 +66,9 @@
 		where c>0
 	</select>
 
+	<select id="testPresto" resultType="int">
+		select count(id)
+		from mysql.test.date_test
+	</select>
+
 </mapper>
