@@ -36,4 +36,6 @@ public interface TimeOutMapper extends Mapper<TimeOut> {
 
     Integer testPresto();
 
+    Integer testMysql();
+
 }

@@ -71,4 +71,9 @@
 		from mysql.test.date_test
 	</select>
 
+	<select id="testMysql" resultType="int">
+		select count(id)
+		from test.date_test
+	</select>
+
 </mapper>

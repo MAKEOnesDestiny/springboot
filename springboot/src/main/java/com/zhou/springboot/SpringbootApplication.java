@@ -38,7 +38,8 @@ public class SpringbootApplication implements EnvironmentAware {
         ApplicationContext ac = SpringApplication
                 .run(SpringbootApplication.class, args);       //main entry
         TestBiz testBiz = ac.getBean(TestBiz.class);
-        testBiz.testPresto();
+        testBiz.testMysql();
+//        testBiz.testPresto();
 
         //        testHATable(ac);
         //        testTrans(ac);

@@ -19,6 +19,12 @@ public class TestBiz {
         System.out.println(res);
     }
 
+    @DataSource("mysql")
+    public void testMysql(){
+        Integer res = timeOutMapper.testMysql();
+        System.out.println(res);
+    }
+
 
 //    @Transactional
     public void testDeadLock(Integer id1, Integer id2) throws InterruptedException {
