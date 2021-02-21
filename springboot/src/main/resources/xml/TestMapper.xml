@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.springboot.dao.TestMapper">
+
+	<select id="getMaxDate" resultType="date">
+		select max(update_time) from test.${tableName}
+	</select>
+
+	<select id="transferData">
+		insert into test.${newTable}
+		(select * from test.${oldTable}
+		 where update_time>#{lastUpdate}
+			limit ${step}
+		)
+	</select>
+
+	<select id="lockTable">
+		lock tables test.${lockTable} write;
+	</select>
+
+	<select id="unlockTableAndRename">
+		unlock tables;
+		rename table test.${lockTable} to test.${newTableName};
+	</select>
+
+	<select id="getOffset" resultType="long">
+		select max(update_time) from test.${oldTable}
+	</select>
+
+</mapper>

@@ -9,8 +9,12 @@ import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.elasticsearch.ElasticsearchHealthIndicatorAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.cloud.CloudAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchRepositoriesAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.EnvironmentAware;
@@ -24,6 +28,11 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication(scanBasePackages = {"com.zhou.springboot.controller", "com.zhou.springboot.model",
         "com.zhou.springboot.dao", "com.zhou.springboot"}
         , exclude = {CloudAutoConfiguration.class, EurekaClientAutoConfiguration.class
+        , ElasticsearchHealthIndicatorAutoConfiguration.class
+        , ElasticsearchAutoConfiguration.class
+        , ElasticsearchDataAutoConfiguration.class
+        , ElasticsearchRepositoriesAutoConfiguration.class
+
         //                , DataSourceAutoConfiguration.class
 })
 @RestController
@@ -39,7 +48,7 @@ public class SpringbootApplication implements EnvironmentAware {
                 .run(SpringbootApplication.class, args);       //main entry
         TestBiz testBiz = ac.getBean(TestBiz.class);
         testBiz.testMysql();
-//        testBiz.testPresto();
+        //        testBiz.testPresto();
 
         //        testHATable(ac);
         //        testTrans(ac);

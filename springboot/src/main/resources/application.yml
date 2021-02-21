@@ -14,6 +14,12 @@ spring:
     host: 127.0.0.1
     #cluster:
     #  nodes: 127.0.0.1:7000,127.0.0.1:7001,127.0.0.1:7002,127.0.0.1:7003,127.0.0.1:7004,127.0.0.1:7005
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch_hfzhou
+      cluster-nodes: 127.0.0.1:9200
+      repositories:
+        enabled: true
 server:
   servlet:
     context-path: /demo
