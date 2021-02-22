@@ -23,10 +23,10 @@ public interface TestMapper {
 
     void lockTable(@Param("lockTable")String lockTable);
 
-    void unlockTableAndRename(@Param("lockTable")String lockTable,@Param("newTableName")String newTableName);
+//    void unlockTableAndRename(@Param("lockTable")String lockTable,@Param("newTableName")String newTableName);
+    void unlockTable(@Param("lockTable")String lockTable);
 
-    void rename(@Param("oldTable") String oldTableName, @Param("newTable") String newTable);
-
+    void renameTable(@Param("oldTableName")String oldTableName,@Param("newTableName")String newTableName);
 
     Long getOffset(@Param("oldTable") String oldTableName, @Param("newTable") String newTable);
 

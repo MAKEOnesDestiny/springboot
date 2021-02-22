@@ -42,10 +42,13 @@ public class EasyTransfer {
         }
 
         String tempTable = oldTable + "$$_temp";
-        testMapper.unlockTableAndRename(oldTable, tempTable);
+        //        testMapper.unlockTableAndRename(oldTable, tempTable);
+        testMapper.unlockTable(oldTable);
         job.unlockTable();
 
-        testMapper.rename(newTable, oldTable);
+        testMapper.renameTable(oldTable, tempTable);
+        testMapper.renameTable(newTable, oldTable);
+
         job.finish();
     }
 

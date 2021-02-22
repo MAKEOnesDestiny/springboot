@@ -32,7 +32,6 @@ import tk.mybatis.spring.annotation.MapperScan;
         , ElasticsearchAutoConfiguration.class
         , ElasticsearchDataAutoConfiguration.class
         , ElasticsearchRepositoriesAutoConfiguration.class
-
         //                , DataSourceAutoConfiguration.class
 })
 @RestController

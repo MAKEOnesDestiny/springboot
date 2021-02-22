@@ -18,10 +18,14 @@
 		lock tables test.${lockTable} write;
 	</select>
 
-	<select id="unlockTableAndRename">
+	<select id="unlockTable">
 		unlock tables;
-		rename table test.${lockTable} to test.${newTableName};
 	</select>
+
+	<select id="renameTable">
+		rename table test.${oldTableName} to test.${newTableName};
+	</select>
+
 
 	<select id="getOffset" resultType="long">
 		select max(update_time) from test.${oldTable}
