@@ -6,12 +6,28 @@
 		select max(update_time) from test.${tableName}
 	</select>
 
+	<delete id="deleteDirty">
+		delete t
+		from test.${newTable} t
+					 join (select id from test.${oldTable}
+								 where update_time>#{lastUpdate}
+								 limit ${step}) tmp  on t.id=tmp.id;
+	</delete>
+
 	<select id="transferData">
 		insert into test.${newTable}
 		(select * from test.${oldTable}
 		 where update_time>#{lastUpdate}
 			limit ${step}
-		)
+		);
+	</select>
+
+	<select id="transferDataWithTimeOut" timeout="1">
+		insert into test.${newTable}
+			(select * from test.${oldTable}
+			 where update_time>#{lastUpdate}
+			 limit ${step}
+			);
 	</select>
 
 	<select id="lockTable">

@@ -16,8 +16,8 @@ public class EasyTransferTest {
 
     @Test
     public void testTransfer() {
-        String oldTable = "auto_update_date_test";
-        String newTable = "auto_update_date_test_new";
+        String oldTable = "hasbani_syns_log";
+        String newTable = "hasbani_syns_log_new";
         easyTransfer.transfer(oldTable, newTable);
     }
 

@@ -17,7 +17,7 @@ public class CustomMybatisPlugin implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-        System.out.println("我是自定义插件～");
+//        System.out.println("我是自定义插件～");
         return invocation.proceed();
     }
 

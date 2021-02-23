@@ -11,6 +11,7 @@ public interface TransferConst {
     int TRANSFER_BATCH = 10000;
 
     //60s
-    long CAN_LOCK_INTERVAL = 60 * 1000;
+//    long CAN_LOCK_INTERVAL = 60 * 1000;
+    long CAN_LOCK_INTERVAL = 0;
 
 }
