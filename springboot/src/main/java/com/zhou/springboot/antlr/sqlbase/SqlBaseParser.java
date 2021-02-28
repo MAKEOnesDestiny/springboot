@@ -1,5 +1,5 @@
 // Generated from /Users/hfzhou/IdeaProjects/springboot/springboot/src/main/java/com/zhou/springboot/antlr/SqlBase.g4 by ANTLR 4.9
-package com.zhou.springboot.antlr;
+package com.zhou.springboot.antlr.sqlbase;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;

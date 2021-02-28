@@ -1,4 +1,4 @@
-package com.zhou.springboot.antlr;
+package com.zhou.springboot.antlr.sqlbase;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
