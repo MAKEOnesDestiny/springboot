@@ -76,4 +76,43 @@
 		from test.date_test
 	</select>
 
+	<select id="testParam" parameterType="int" resultType="int">
+		select count(1)
+		from test.date_test
+		where id=#{id}
+	</select>
+
+	<select id="testMultiParam" resultType="int">
+		select count(1)
+		from test.time_out
+		where id= #{id} and test_name like '?' and test_name = #{name}
+	</select>
+
+	<select id="testDate" resultType="int">
+		select count(1)
+		from test.date_test
+		where id= #{id} and `time` = #{time}
+	</select>
+
+	<select id="testBean" resultType="int">
+		select count(1)
+		from test.time_out
+		where `test_name` = #{testBean.name} and id = #{testBean.num}
+	</select>
+
+	<insert id="patchInsert">
+		insert into test.time_out(`id`,`test_name`)
+		values
+		<foreach collection="list" item="i" separator=",">
+			(
+				#{i.num},
+				#{i.name}
+			)
+		</foreach>
+	</insert>
+
+	<delete id="testDelete">
+		delete from test.time_out limit 1
+	</delete>
+
 </mapper>

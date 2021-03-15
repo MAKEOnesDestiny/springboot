@@ -34,7 +34,7 @@ public class DemoTest {
     public static void main(String[] args) {
         //        run("1+(2*3)");
         //        run("4/2*3)");
-        run("20-12/(2*3 )+10");
+        run("20-12/2*7+10");
     }
 
     public static void run(String expr) {

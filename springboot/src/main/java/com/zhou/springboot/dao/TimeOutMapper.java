@@ -1,7 +1,8 @@
 package com.zhou.springboot.dao;
 
-import com.zhou.springboot.bean.HasbaniSynsLog;
 import com.zhou.springboot.bean.TimeOut;
+import com.zhou.springboot.model.TestBean;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Param;
@@ -37,5 +38,17 @@ public interface TimeOutMapper extends Mapper<TimeOut> {
     Integer testPresto();
 
     Integer testMysql();
+
+    Integer testParam(@Param("id") Integer id);
+
+    Integer testMultiParam(@Param("id") Integer id, @Param("name") String name);
+
+    Integer testDate(@Param("id") int id, @Param("time") Date time);
+
+    Integer testBean(@Param("testBean") TestBean testBean);
+
+    Integer patchInsert(@Param("list")List<TestBean> list);
+
+    Integer testDelete();
 
 }

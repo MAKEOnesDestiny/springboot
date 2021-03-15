@@ -35,7 +35,7 @@ public class MybatisConfig {
     @Bean
     public ConfigurationCustomizer configurationCustomizer() {
         return (configuration) -> {
-            configuration.addInterceptor(new CustomMybatisPlugin());
+            configuration.addInterceptor(new CustomMybatisPlugin()); //自定义插件
         };
     }
 
