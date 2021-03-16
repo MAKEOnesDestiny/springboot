@@ -112,7 +112,10 @@
 	</insert>
 
 	<delete id="testDelete">
-		delete from test.time_out limit 1
+		delete from
+
+
+	test.time_out limit 1
 	</delete>
 
 </mapper>

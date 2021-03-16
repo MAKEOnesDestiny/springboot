@@ -62,6 +62,7 @@ public class CustomMybatisPlugin implements Interceptor {
             ParamReplaceHandler paramReplaceHandler = new ParamReplaceHandler(paramList);
             GenericTokenParser parser = new GenericTokenParser("?", "", paramReplaceHandler);
             String parsedSql = parser.parse(ms.getBoundSql(paramMap).getSql());
+            parsedSql = parsedSql.replaceAll("\n+","\n");
             System.out.println(parsedSql);
         } catch (Exception e) {
             //todo : do something?
