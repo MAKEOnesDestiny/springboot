@@ -17,6 +17,20 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import tk.mybatis.mapper.autoconfigure.ConfigurationCustomizer;
 
+/**
+ * Mybatis中比较重要的类：
+ *
+ * JdkDynamicAopProxy
+ * MapperProxy
+ * MapperMethod
+ * SqlSession
+ * BoundSql
+ * GenericTokenParser用于Token解析
+ * ConnectionLogger
+ * PreparedStatementLogger
+ * MetaObject
+ * PropertyTokenizer
+ */
 @Configuration
 @EnableConfigurationProperties({DataSourceProperties.class})
 @Order(0)

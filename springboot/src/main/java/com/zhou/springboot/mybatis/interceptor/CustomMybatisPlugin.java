@@ -35,38 +35,34 @@ public class CustomMybatisPlugin implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-        try {
-            Object[] args = invocation.getArgs();
-            MappedStatement ms = (MappedStatement) args[0];
-            Map paramMap = (Map) args[1];
+        Object[] args = invocation.getArgs();
+        MappedStatement ms = (MappedStatement) args[0];
+        Map paramMap = (Map) args[1];
 
-            Configuration configuration = ms.getConfiguration();
-            MetaObject metaObject = configuration.newMetaObject(paramMap); //用于迭代获取bean中的子元素
+        Configuration configuration = ms.getConfiguration();
+        MetaObject metaObject = configuration.newMetaObject(paramMap); //用于迭代获取bean中的子元素
 
-            List<Object> paramList = new ArrayList<>();
-            BoundSql boundSql = ms.getBoundSql(paramMap);
-            List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
-            for (int i = 0; i < parameterMappings.size(); i++) {
-                ParameterMapping parameterMapping = parameterMappings.get(i);
-                String propertyName = parameterMapping.getProperty();
+        List<Object> paramList = new ArrayList<>();
+        BoundSql boundSql = ms.getBoundSql(paramMap);
+        List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+        for (int i = 0; i < parameterMappings.size(); i++) {
+            ParameterMapping parameterMapping = parameterMappings.get(i);
+            String propertyName = parameterMapping.getProperty();
 
-                Object value;
-                if (boundSql.hasAdditionalParameter(propertyName)) {
-                    value = boundSql.getAdditionalParameter(propertyName);
-                } else {
-                    value = metaObject.getValue(propertyName);
-                }
-                paramList.add(value);
+            Object value;
+            if (boundSql.hasAdditionalParameter(propertyName)) {
+                value = boundSql.getAdditionalParameter(propertyName);
+            } else {
+                value = metaObject.getValue(propertyName);
             }
-
-            ParamReplaceHandler paramReplaceHandler = new ParamReplaceHandler(paramList);
-            GenericTokenParser parser = new GenericTokenParser("?", "", paramReplaceHandler);
-            String parsedSql = parser.parse(ms.getBoundSql(paramMap).getSql());
-            parsedSql = parsedSql.replaceAll("\n+","\n");
-            System.out.println(parsedSql);
-        } catch (Exception e) {
-            //todo : do something?
+            paramList.add(value);
         }
+
+        ParamReplaceHandler paramReplaceHandler = new ParamReplaceHandler(paramList);
+        GenericTokenParser parser = new GenericTokenParser("?", "", paramReplaceHandler);
+        String parsedSql = parser.parse(ms.getBoundSql(paramMap).getSql());
+        parsedSql = parsedSql.replaceAll("\n+\t*\\s*\n+", "\n");
+        System.out.println(parsedSql);
 
         return invocation.proceed();
     }
