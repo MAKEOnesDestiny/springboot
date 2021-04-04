@@ -38,7 +38,7 @@ public class DemoTest {
     }
 
     public static void run(String expr) {
-        ANTLRInputStream in = new ANTLRInputStream(expr);
+        ANTLRInputStream in = new ANTLRInputStream(expr);  //use CharStreams instead
         //分词器
         DemoLexer lexer = new DemoLexer(in);
         //用词法分析器构建一个记号流tokens

@@ -21,6 +21,6 @@ atom:'('expr')'
 ID:('a'..'z'|'A'..'Z')+;
 INT:'0'..'9'+;
 NEWLINE:'\r'?'\n';
-WS:(' '|'\t'|'\n'|'\r')+{skip();};
+WS:(' '|'\t'|'\n'|'\r')+ -> skip;   //空格选择忽略
 
 //options {language=?;} 来改变目标语言
