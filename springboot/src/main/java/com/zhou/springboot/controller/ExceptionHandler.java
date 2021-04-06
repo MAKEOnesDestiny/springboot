@@ -10,6 +10,6 @@ public class ExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
     public Object exception(Exception e, Object handlerMethod) {
-        return "aaaa";
+        return "全局异常捕获";
     }
 }
