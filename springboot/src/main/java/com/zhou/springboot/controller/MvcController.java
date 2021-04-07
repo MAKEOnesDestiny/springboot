@@ -2,6 +2,7 @@ package com.zhou.springboot.controller;
 
 
 import com.zhou.springboot.anno.ApiDoc;
+import com.zhou.springboot.anno.EnableResource;
 import com.zhou.springboot.anno.MenuDoc;
 import com.zhou.springboot.anno.ParamInfo;
 import com.zhou.springboot.bean.TestMvcFatherBean;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/mvc")
 @MenuDoc("一级菜单")
+@EnableResource
 public class MvcController {
 
     @RequestMapping("test")

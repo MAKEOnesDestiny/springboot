@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.cloud.CloudAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.EnvironmentAware;
@@ -32,6 +33,7 @@ import tk.mybatis.spring.annotation.MapperScan;
         , ElasticsearchAutoConfiguration.class
         , ElasticsearchDataAutoConfiguration.class
         , ElasticsearchRepositoriesAutoConfiguration.class
+//        , RedisAutoConfiguration.class
         //                , DataSourceAutoConfiguration.class
 })
 @RestController

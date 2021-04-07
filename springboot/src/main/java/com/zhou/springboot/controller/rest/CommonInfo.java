@@ -2,7 +2,6 @@ package com.zhou.springboot.controller.rest;
 
 public abstract class CommonInfo<T> {
 
-    private String name;
     private Class<T> type;
     private T example;
     private String meaning;
@@ -10,19 +9,10 @@ public abstract class CommonInfo<T> {
     public CommonInfo() {
     }
 
-    public CommonInfo(String name, Class<T> type, T example, String meaning) {
-        this.name = name;
+    public CommonInfo(Class<T> type, T example, String meaning) {
         this.type = type;
         this.example = example;
         this.meaning = meaning;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Class<T> getType() {

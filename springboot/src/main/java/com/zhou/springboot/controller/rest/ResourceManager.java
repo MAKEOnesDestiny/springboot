@@ -3,6 +3,7 @@ package com.zhou.springboot.controller.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.zhou.springboot.anno.ApiDoc;
+import com.zhou.springboot.anno.EnableResource;
 import com.zhou.springboot.anno.MenuDoc;
 import com.zhou.springboot.anno.ParamInfo;
 import java.lang.reflect.Method;
@@ -66,8 +67,10 @@ public class ResourceManager implements CommandLineRunner {
         checkState();
         List<WebResource> webResources = new ArrayList<>();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : this.urlLookup.entrySet()) {
-            WebResource wr = resolve(entry.getKey(), entry.getValue());
-            webResources.add(wr);
+            if (shouldResolve(entry.getKey(), entry.getValue())) {
+                WebResource wr = resolve(entry.getKey(), entry.getValue());
+                webResources.add(wr);
+            }
         }
         return webResources;
     }
@@ -92,6 +95,15 @@ public class ResourceManager implements CommandLineRunner {
             }
         }
         return new WebResource(urlPath, null, null, null, apiDoc, menuDoc, inputParams);
+    }
+
+    private boolean shouldResolve(RequestMappingInfo info, HandlerMethod method) {
+        EnableResource er = method.getMethod().getDeclaringClass().getAnnotation(EnableResource.class);
+        if (er != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean isRequired() {
@@ -121,9 +133,14 @@ public class ResourceManager implements CommandLineRunner {
         }
     }
 
-    private <T> T convertWithJson(String valueText, Class<T> clazz) {
-        ObjectMapper ob = new ObjectMapper();
-        return ob.convertValue(valueText, clazz);
+    private <T> T convertWithJson(String valueText, Class<T> type) {
+        try {
+            ObjectMapper ob = new ObjectMapper();
+            return ob.convertValue(valueText, type);
+        } catch (Exception e) {
+            log.error("can't convert {} to {}", valueText, type);
+            return null;
+        }
     }
 
 }
