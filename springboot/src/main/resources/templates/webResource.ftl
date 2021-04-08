@@ -32,26 +32,43 @@
 
     <#list wss as ws>
       <span class='le'> ${ws.menuDoc?if_exists} - ${ws.apiDoc?if_exists} </span>
-      <span class='ri'>URL:<em> ${ws.urlPath} </em></span>
-      <span class='ri'>方式:<em> ${ws.restType?if_exists} </em></span>
+      <span class='le'>URL:<em> ${ws.urlPath} </em></span>
+      <span class='le'>请求类型:${ws.consumeType?if_exists}</span>
 
-      <div class='says'>返回结构示例：
-        <pre class="intersays">
-          {
-              "status": "0",
-              "msg": "OK",
-              "requestid": "92900942120392416871",
-              "result": {
-                  "article": {       #文章列表接口。
-                      "title": "文章列表接口！",
-                      "type": 12 #类别ID
-                      "create_time": "12700818",  #创建时间
-                      "update_time": "213213211", #修改时间
+      <!--json-->
+      <#if ws.getShowType()='param_json'>
+        <#list ws.inputParams as ps>
+  <div>
+    <pre>
+      ${ps.example?if_exists}
+    </pre>
+  </div>
+        </#list>
+      </#if>
 
-                  }
-              }
-          }
-      </div>
+      <!--表单-->
+      <#if ws.getShowType()='param_form'>
+          <div>
+            <table border="1">
+                <tr>
+                  <th>参数名称</th>
+                  <th>是否必填</th>
+                  <th>类型</th>
+                  <th>示例</th>
+                  <th>说明</th>
+                </tr>
+              <#list ws.inputParams as ps>
+                <tr>
+                  <th>${ps.name}</th>
+                  <th>${ps.getRequired()?string('是','否')}</th>
+                  <th>${ps.type.getSimpleName()}</th>
+                  <th>${ps.example}</th>
+                  <th>${ps.meaning}</th>
+                </tr>
+              </#list>
+            </table>
+          </div>
+      </#if>
     </#list>
 
   </div>

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableResource
 public class MvcController {
 
-    @RequestMapping("test")
+//    @RequestMapping("test")
     public void testmvc(@ParamInfo() TestMvcFatherBean fatherBean) {
         System.out.println(fatherBean.getSon().getId());
     }
@@ -36,22 +36,22 @@ public class MvcController {
     }
 
 
-    @RequestMapping("file")
+//    @RequestMapping("file")
     public void testFile(@RequestPart(value = "fileName") Part part) {
         System.out.println(part.getContentType());
     }
 
-    @RequestMapping("map")
+//    @RequestMapping("map")
     public void testMap(@RequestBody @ParamInfo(example = "{\"a\":123}",meaning = "测试map") List<Integer> map) {
         System.out.println(map);
     }
 
-    @RequestMapping("obj")
+//    @RequestMapping("obj")
     public void testObj(TestBean testBean){
 
     }
 
-    @RequestMapping("arr")
+//    @RequestMapping("arr")
     public void testArr(Integer[] ints){
         System.out.println();
     }

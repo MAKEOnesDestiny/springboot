@@ -1,7 +1,7 @@
 package com.zhou.springboot.controller.rest;
 
 import java.util.List;
-import org.apache.http.entity.ContentType;
+import org.springframework.http.MediaType;
 
 public class WebResource {
 
@@ -9,15 +9,15 @@ public class WebResource {
     private String urlPath;
     //GET POST DELETE PUT ...
     private String restType;
-    private ContentType consumeType;
-    private ContentType produceType;
+    private String consumeType;
+    private String produceType;
     private String apiDoc;
     private String menuDoc;
 
     private List<InputParam> inputParams;
 
-    public WebResource(String urlPath, String restType, ContentType consumeType,
-                       ContentType produceType, String apiDoc, String menuDoc,
+    public WebResource(String urlPath, String restType, String consumeType,
+                       String produceType, String apiDoc, String menuDoc,
                        List<InputParam> inputParams) {
         this.urlPath = urlPath;
         this.restType = restType;
@@ -26,6 +26,17 @@ public class WebResource {
         this.apiDoc = apiDoc;
         this.menuDoc = menuDoc;
         this.inputParams = inputParams;
+    }
+
+    public String getShowType() {
+        if (MediaType.APPLICATION_JSON_UTF8_VALUE.equals(consumeType)) {
+            return ResourceConst.PARAM_JSON;
+        }
+        if (MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(consumeType)
+                || MediaType.MULTIPART_FORM_DATA_VALUE.equals(consumeType)) {
+            return ResourceConst.PARAM_FORM;
+        }
+        return null;
     }
 
     public String getUrlPath() {
@@ -44,19 +55,19 @@ public class WebResource {
         this.restType = restType;
     }
 
-    public ContentType getConsumeType() {
+    public String getConsumeType() {
         return consumeType;
     }
 
-    public void setConsumeType(ContentType consumeType) {
+    public void setConsumeType(String consumeType) {
         this.consumeType = consumeType;
     }
 
-    public ContentType getProduceType() {
+    public String getProduceType() {
         return produceType;
     }
 
-    public void setProduceType(ContentType produceType) {
+    public void setProduceType(String produceType) {
         this.produceType = produceType;
     }
 

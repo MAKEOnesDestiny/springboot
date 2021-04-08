@@ -1,5 +1,6 @@
 package com.zhou.springboot.junit;
 
+import com.zhou.springboot.controller.rest.ResourceManager;
 import com.zhou.springboot.controller.rest.WebResource;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -12,14 +13,18 @@ import java.util.HashMap;
 import java.util.Objects;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class HtmlTest {
+
+    @Autowired
+    private ResourceManager resourceManager;
 
     @Test
     public void testTemplate() throws Exception {
@@ -31,7 +36,7 @@ public class HtmlTest {
         Writer writer = new PrintWriter(System.out);
         Template template = cfg.getTemplate("webResource.ftl", StandardCharsets.UTF_8.toString());
         template.process(new HashMap<String, Object>() {{
-            put("ws", mockResource());
+            put("wss", resourceManager.getAllWebResource());
         }}, writer);
     }
 

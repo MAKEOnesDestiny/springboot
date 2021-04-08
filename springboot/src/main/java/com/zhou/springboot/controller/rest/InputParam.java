@@ -5,19 +5,19 @@ public class InputParam<T> extends CommonInfo<T> {
 
     private String name;
 
-    private Boolean isRequired;
+    private boolean isRequired;
 
-    public InputParam(String name, Class<T> type, T example, String meaning, Boolean isRequired) {
+    public InputParam(String name, Class<T> type, T example, String meaning, boolean isRequired) {
         super(type, example, meaning);
         this.name = name;
         this.isRequired = isRequired;
     }
 
-    public Boolean getRequired() {
+    public boolean getRequired() {
         return isRequired;
     }
 
-    public void setRequired(Boolean required) {
+    public void setRequired(boolean required) {
         isRequired = required;
     }
 

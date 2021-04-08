@@ -6,10 +6,14 @@ import com.zhou.springboot.anno.ApiDoc;
 import com.zhou.springboot.anno.EnableResource;
 import com.zhou.springboot.anno.MenuDoc;
 import com.zhou.springboot.anno.ParamInfo;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +22,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.AbstractHandlerMethodMapping;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -29,6 +37,17 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 public class ResourceManager implements CommandLineRunner {
 
     public static final Logger log = LoggerFactory.getLogger(ResourceManager.class);
+    public static final List<Class> REQUIRE_ANNO_SUPPORT = new ArrayList<Class>() {{
+        add(RequestParam.class);
+        add(RequestBody.class);
+        add(RequestPart.class);
+        //todo : add more ... e.g. PathVariable RequestAttribute
+    }};
+    public static final List<Class> SKIP_CLASS = new ArrayList<Class>() {{
+        add(ServletRequest.class);
+        add(ServletResponse.class);
+        //todo : have more ?
+    }};
 
     @Autowired
     private ApplicationContext ac;
@@ -79,22 +98,58 @@ public class ResourceManager implements CommandLineRunner {
         //这里不需要多个urlPath
         String urlPath = info.getPatternsCondition().getPatterns().stream().findFirst().get();
         ApiDoc apiDocAnn = method.getMethod().getAnnotation(ApiDoc.class);
-        MenuDoc menuDocAnn = method.getMethod().getAnnotation(MenuDoc.class);
+        MenuDoc menuDocAnn = method.getBeanType().getAnnotation(MenuDoc.class);
         String apiDoc = apiDocAnn == null ? null : apiDocAnn.value();
         String menuDoc = menuDocAnn == null ? null : menuDocAnn.value();
+        String consumeType = guessContentType(info, method);
 
         MethodParameter[] methodParameters = method.getMethodParameters();
         List<InputParam> inputParams = new ArrayList<>();
         if (methodParameters != null && methodParameters.length > 0) {
             //解析参数
             for (MethodParameter p : methodParameters) {
-                ParamInfo pi = p.getParameterAnnotation(ParamInfo.class);
-                InputParam inputParam = new InputParam(p.getParameter().getName(), p.getParameterType(), convert(p, pi),
-                                                       pi == null ? null : pi.meaning(), isRequired()); //todo : test
-                inputParams.add(inputParam);
+                if (!shouldSkip(p)) {
+                    ParamInfo pi = p.getParameterAnnotation(ParamInfo.class);
+                    InputParam inputParam = new InputParam(p.getParameter().getName(), p.getParameterType(),
+                                                           convert(p, pi, consumeType),
+                                                           pi == null ? null : pi.meaning(),
+                                                           isRequired(p));
+                    inputParams.add(inputParam);
+                }
             }
         }
-        return new WebResource(urlPath, null, null, null, apiDoc, menuDoc, inputParams);
+
+        return new WebResource(urlPath, null, consumeType, null, apiDoc, menuDoc, inputParams);
+    }
+
+    private String guessContentType(RequestMappingInfo info, HandlerMethod method) {
+        if (!info.getConsumesCondition().isEmpty()) {
+            Set<MediaType> mediaTypes = info.getConsumesCondition().getConsumableMediaTypes();
+            //只需要支持一个即可
+            MediaType mediaType = mediaTypes.stream().findFirst().get();
+            return mediaType.toString();
+        }
+        //guess form-data or json
+        MethodParameter[] methodParameters = method.getMethodParameters();
+        if (methodParameters != null && methodParameters.length > 0) {
+            for (MethodParameter p : methodParameters) {
+                if (p.getParameterAnnotation(RequestBody.class) != null) {
+                    return MediaType.APPLICATION_JSON_UTF8_VALUE;
+                }
+            }
+            return MediaType.MULTIPART_FORM_DATA_VALUE;
+        }
+        //default
+        return MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+    }
+
+    private boolean shouldSkip(MethodParameter p) {
+        for (Class skip : SKIP_CLASS) {
+            if (skip.isAssignableFrom(p.getParameterType())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean shouldResolve(RequestMappingInfo info, HandlerMethod method) {
@@ -106,19 +161,43 @@ public class ResourceManager implements CommandLineRunner {
         }
     }
 
-    private boolean isRequired() {
-        //todo : to do
-        return true;
+    private boolean isRequired(MethodParameter p) {
+        //todo : test
+        ParamInfo pi = p.getParameterAnnotation(ParamInfo.class);
+        if (pi != null && pi.required()) {
+            //就算程序上没有做限制，但是也可以在业务上强制限制其必填
+            return true;
+        }
+        for (Class c : REQUIRE_ANNO_SUPPORT) {
+            Annotation ann = p.getParameterAnnotation(c);
+            if (RequestParam.class.equals(ann)) {
+                return ((RequestParam) ann).required();
+            }
+            if (RequestBody.class.equals(ann)) {
+                return ((RequestBody) ann).required();
+            }
+            if (RequestPart.class.equals(ann)) {
+                return ((RequestPart) ann).required();
+            }
+        }
+        return false;
     }
 
-    private Object convert(MethodParameter p, ParamInfo pi) {
+    private Object convert(MethodParameter p, ParamInfo pi, String consumeType) {
         if (pi == null) {
             return null;
         }
         if (StringUtils.isBlank(pi.example())) {
             return null;
         }
-        return convertWithJson(pi.example(), p.getParameterType());
+        if (MediaType.APPLICATION_JSON_UTF8_VALUE.equals(consumeType)) {
+            return convertWithJson(pi.example(), p.getParameterType());
+        } else if (MediaType.MULTIPART_FORM_DATA_VALUE.equals(consumeType)
+                || MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(consumeType)) {
+            return convertWithFormData(pi.example(), p.getParameterType());
+        }
+        log.warn("unknow consumeType ==> {}", consumeType);
+        return null;
     }
 
     private <T> T convertWithFormData(String valueText, Class<T> type) {
