@@ -1,9 +1,13 @@
 package com.zhou.springboot.bean;
 
+import com.zhou.springboot.anno.ParamInfo;
+
 public class TestMvcFatherBean {
 
+    //    @ParamInfo(complexInfo = TestMvcSonBean.class)
     private TestMvcSonBean son;
 
+    @ParamInfo(example = "123", meaning = "父亲id", required = true)
     private Integer fId;
 
     public Integer getfId() {

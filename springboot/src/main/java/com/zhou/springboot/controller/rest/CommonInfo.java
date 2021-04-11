@@ -38,4 +38,11 @@ public abstract class CommonInfo<T> {
     public void setMeaning(String meaning) {
         this.meaning = meaning;
     }
+
+    public String getExampleStr() {
+        if (example == null) {
+            return "";
+        }
+        return example.toString();
+    }
 }

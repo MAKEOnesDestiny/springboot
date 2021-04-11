@@ -11,12 +11,12 @@ import java.lang.annotation.Target;
 @Documented
 public @interface ReturnInfo {
 
-    String example();
+    String example() default "";
 
-    String meaning();
+    String meaning() default "";
 
-    Class complexInfo();
+    Class returnClass() default Void.class;
 
-    Class realClass();
+    Class complexInfo() default Void.class;
 
 }

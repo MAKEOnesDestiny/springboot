@@ -1,14 +1,18 @@
 package com.zhou.springboot.controller.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.zhou.springboot.anno.ApiDoc;
 import com.zhou.springboot.anno.EnableResource;
 import com.zhou.springboot.anno.MenuDoc;
 import com.zhou.springboot.anno.ParamInfo;
+import com.zhou.springboot.controller.rest.WebResource.WebResourceBuilder;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +21,7 @@ import javax.servlet.ServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
@@ -105,21 +110,70 @@ public class ResourceManager implements CommandLineRunner {
 
         MethodParameter[] methodParameters = method.getMethodParameters();
         List<InputParam> inputParams = new ArrayList<>();
+        String jsonExample = null;
         if (methodParameters != null && methodParameters.length > 0) {
             //解析参数
             for (MethodParameter p : methodParameters) {
-                if (!shouldSkip(p)) {
-                    ParamInfo pi = p.getParameterAnnotation(ParamInfo.class);
-                    InputParam inputParam = new InputParam(p.getParameter().getName(), p.getParameterType(),
-                                                           convert(p, pi, consumeType),
-                                                           pi == null ? null : pi.meaning(),
-                                                           isRequired(p));
-                    inputParams.add(inputParam);
+                if (shouldSkip(p)) {
+                    continue;
+                }
+                ParamInfo pi = p.getParameterAnnotation(ParamInfo.class);
+                //越个性化的优先级越高，但是不同优先级的不能混用
+                if (pi.complexInfo() != Void.class && Visualized.class.isAssignableFrom(pi.complexInfo())) {
+                    WebResourceBuilder wrb = new WebResourceBuilder(urlPath, null, consumeType, null, apiDoc, menuDoc);
+                    try {
+                        Visualized vc = (Visualized) pi.complexInfo().newInstance();
+                        vc.generateWebResource(wrb);
+                        return wrb.build();
+                    } catch (Exception e) {
+                        log.error(e.getMessage(), e);
+                        return wrb.errorBuild();
+                    }
+                }
+                if (MediaType.MULTIPART_FORM_DATA_VALUE.equals(consumeType)
+                        || MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(consumeType)) {
+                    if (BeanUtils.isSimpleProperty(p.getParameterType())) {
+                        InputParam inputParam = new InputParam(p.getParameter().getName(), p.getParameterType(),
+                                                               convert(p, pi, consumeType),
+                                                               pi == null ? null : pi.meaning(),
+                                                               isRequired(p));
+                        inputParams.add(inputParam);
+                    } else {
+                        resolveComplexProperty(p, consumeType, inputParams, false);
+                    }
+                } else {
+                    //复杂对象，例如Map Bean
+                    jsonExample = resolveComplexProperty(p, consumeType, inputParams, true);
                 }
             }
         }
 
-        return new WebResource(urlPath, null, consumeType, null, apiDoc, menuDoc, inputParams);
+        return new WebResource(urlPath, null, consumeType, null, apiDoc, menuDoc, inputParams, jsonExample);
+    }
+
+
+    private String resolveComplexProperty(MethodParameter p, String consumeType, List<InputParam> inputParams,
+                                          boolean needJsonExample) {
+        Class clazz = p.getParameterType();
+        Field[] fields = clazz.getDeclaredFields();
+        Map<String, Object> json = new HashMap<>();
+        for (Field f : fields) {
+            ParamInfo pi = f.getAnnotation(ParamInfo.class);
+            if (pi != null) {
+                Object v = convertWithFormData(pi.example(), f.getType());
+                inputParams.add(new InputParam(f.getName(), f.getType(), v, pi == null ? null : pi.meaning(),
+                                               isRequired(p)));
+                if (needJsonExample) {
+                    json.put(f.getName(), v);
+                }
+            }
+        }
+        try {
+            return new ObjectMapper().writeValueAsString(json);
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
     }
 
     private String guessContentType(RequestMappingInfo info, HandlerMethod method) {
@@ -162,7 +216,6 @@ public class ResourceManager implements CommandLineRunner {
     }
 
     private boolean isRequired(MethodParameter p) {
-        //todo : test
         ParamInfo pi = p.getParameterAnnotation(ParamInfo.class);
         if (pi != null && pi.required()) {
             //就算程序上没有做限制，但是也可以在业务上强制限制其必填
@@ -200,7 +253,7 @@ public class ResourceManager implements CommandLineRunner {
         return null;
     }
 
-    private <T> T convertWithFormData(String valueText, Class<T> type) {
+    private Object convertWithFormData(String valueText, Class type) {
         if (valueText == null) {
             return null;
         }
@@ -208,17 +261,17 @@ public class ResourceManager implements CommandLineRunner {
             return conversionService.convert(valueText, type);
         } catch (Exception e) {
             log.error("can't convert {} to {}", valueText, type);
-            return null;
+            return valueText;
         }
     }
 
-    private <T> T convertWithJson(String valueText, Class<T> type) {
+    private Object convertWithJson(String valueText, Class type) {
         try {
             ObjectMapper ob = new ObjectMapper();
             return ob.convertValue(valueText, type);
         } catch (Exception e) {
             log.error("can't convert {} to {}", valueText, type);
-            return null;
+            return valueText;
         }
     }
 

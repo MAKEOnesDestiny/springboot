@@ -37,16 +37,37 @@
 
       <!--json-->
       <#if ws.getShowType()='param_json'>
-        <#list ws.inputParams as ps>
-  <div>
+        <#if ws.inputParams??>
+            <div>
+              <table border="1">
+                <tr>
+                  <th>参数名称</th>
+                  <th>是否必填</th>
+                  <th>类型</th>
+                  <th>示例</th>
+                  <th>说明</th>
+                </tr>
+              <#list ws.inputParams as ps>
+                <tr>
+                  <th>${ps.name}</th>
+                  <th>${ps.getRequired()?string('是','否')}</th>
+                  <th>${ps.type.getSimpleName()}</th>
+                  <th>${ps.getExampleStr()}</th>
+                  <th>${ps.meaning}</th>
+                </tr>
+              </#list>
+                </table>
+              </div>
+        </#if>
+        <div>
     <pre>
-      ${ps.example?if_exists}
+      ${ws.jsonExample?if_exists}
     </pre>
-  </div>
-        </#list>
+        </div>
       </#if>
 
       <!--表单-->
+      <#if ws.inputParams??>
       <#if ws.getShowType()='param_form'>
           <div>
             <table border="1">
@@ -68,6 +89,7 @@
               </#list>
             </table>
           </div>
+      </#if>
       </#if>
     </#list>
 

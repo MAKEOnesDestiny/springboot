@@ -17,5 +17,6 @@ public @interface ParamInfo {
 
     boolean required() default false; //注意：这里的默认值
 
+
     Class complexInfo() default Void.class; //代表的不是参数的类型，而是参数相关信息存放的类
 }
