@@ -4,6 +4,7 @@ import com.zhou.springboot.model.TestBean;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,10 @@ public class MybatisTest {
         timeOutMapper.testDelete();
     }
 
+    @Test
+    public void testFetchSize(){
+        List<Map> list = timeOutMapper.testFetchSize(); //fetchSize参数对MySQL而言不能用
+        System.out.println(list);
+    }
 
 }

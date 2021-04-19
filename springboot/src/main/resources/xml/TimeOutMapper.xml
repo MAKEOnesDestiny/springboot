@@ -113,9 +113,12 @@
 
 	<delete id="testDelete">
 		delete from
-
-
 	test.time_out limit 1
 	</delete>
+
+	<select id="testFetchSize" resultType="map" fetchSize="3">
+		select *
+		from bi.sys_shop
+	</select>
 
 </mapper>

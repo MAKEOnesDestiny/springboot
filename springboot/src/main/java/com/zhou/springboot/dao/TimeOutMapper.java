@@ -51,4 +51,6 @@ public interface TimeOutMapper extends Mapper<TimeOut> {
 
     Integer testDelete();
 
+    List<Map> testFetchSize();
+
 }

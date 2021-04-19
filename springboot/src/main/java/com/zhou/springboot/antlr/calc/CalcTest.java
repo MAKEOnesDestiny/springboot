@@ -27,7 +27,7 @@ public class CalcTest {
         //        CharStream cs = CharStreams.fromStream(System.in);
         CharStream cs = CharStreams.fromString(new StringBuilder().append("a=1").append("\n")
                                                        .append("b=10").append("\n")
-                                                       .append("1+5-10*1").append("\n")
+                                                       .append("a+5-b*2").append("\n")
                                                        .toString());
         CalcLexer lexer = new CalcLexer(cs);
         CommonTokenStream cts = new CommonTokenStream(lexer);

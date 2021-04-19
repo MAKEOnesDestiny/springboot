@@ -1,6 +1,7 @@
 grammar Calc;
-import LexerRule;
+import LexerRule; //词法规则
 
+//语法规则
 prog: stat+;
 stat: expr NEWLINE          # printExpr  //标签
     | ID '=' expr NEWLINE   # assign
@@ -13,6 +14,7 @@ expr: expr op=('*'|'/') expr  # MulDiv   //op是关键字？？
     | '(' expr ')'            # parens
     ;
 
+//词法
 MUL: '*';
 DIV: '/';
 ADD: '+';
