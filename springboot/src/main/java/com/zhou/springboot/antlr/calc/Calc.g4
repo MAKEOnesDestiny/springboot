@@ -14,7 +14,7 @@ expr: expr op=('*'|'/') expr  # MulDiv   //op是关键字？？
     | '(' expr ')'            # parens
     ;
 
-//词法
+//词法，用大写表示
 MUL: '*';
 DIV: '/';
 ADD: '+';
