@@ -127,7 +127,7 @@ public class PropertyFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			startFile();
+			startFile(); //自定义函数
 			setState(6); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
