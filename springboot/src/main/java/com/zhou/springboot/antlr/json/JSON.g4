@@ -6,23 +6,23 @@ json: object
     | array
     ;
 
-object: '{' pair (',' pair)* '}'
-       | '{' '}'
+object: '{' pair (',' pair)* '}'  # AnObject
+       | '{' '}'                  # EmptyObject
        ;
 
 pair: STRING ':' value;
 
-array: '[' value (',' value)* ']'
-      | '[' ']'  //空数组
+array: '[' value (',' value)* ']' # ArrayOfValues
+      | '[' ']'                   # EmptyArray
       ;
 
-value: STRING //字符串匹配
-     | NUMBER //数字
-     | object //递归调用
-     | array
-     | 'true'
-     | 'false'
-     | 'null'
+value: STRING   # String  //字符串匹配
+     | NUMBER   # Atom  //数字
+     | object   # ObjectValue  //递归调用
+     | array    # ArrayObject
+     | 'true'   # Atom
+     | 'false'  # Atom
+     | 'null'   # Atom
      ;
 
 
@@ -41,6 +41,25 @@ fragment EXP: [Ee][+\-]? INT;   // \- 是对 - 的转义
 
 WS: [ \t\n\r]+ -> skip; //在任意两个词法符号之间，可以存在任意多的空白字符
 
+
+
+/**
+
+{
+    "description": "An imaginary server config file",
+    "logs": {
+        "level": "verbose",
+        "dir": "/var/log"
+    },
+    "host": "antlr.org",
+    "admin": [
+        "parrt",
+        "tombu"
+    ],
+    "aliases": []
+}
+
+**/
 
 
 
