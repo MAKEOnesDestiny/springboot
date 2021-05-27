@@ -7,4 +7,13 @@ public class LocalScope extends BaseScope {
 
     List<String> symbols = new ArrayList<>();
 
+    @Override
+    public Scope getParentScope() {
+        return null;
+    }
+
+    @Override
+    public List<Symbol> getVariableSymbols() {
+        return null;
+    }
 }
