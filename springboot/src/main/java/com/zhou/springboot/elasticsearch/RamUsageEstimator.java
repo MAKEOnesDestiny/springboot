@@ -96,7 +96,7 @@ public class RamUsageEstimator {
     /**
      * True, iff compressed references (oops) are enabled by this JVM
      */
-    public final static boolean COMPRESSED_REFS_ENABLED;
+    public final static boolean COMPRESSED_REFS_ENABLED; //是否开启压缩指针
 
     /**
      * Number of bytes this JVM uses to represent an object reference.
@@ -106,18 +106,18 @@ public class RamUsageEstimator {
     /**
      * Number of bytes to represent an object header (no fields, no alignments).
      */
-    public final static int NUM_BYTES_OBJECT_HEADER;
+    public final static int NUM_BYTES_OBJECT_HEADER; //非数组对象的对象头
 
     /**
      * Number of bytes to represent an array header (no content, but with alignments).
      */
-    public final static int NUM_BYTES_ARRAY_HEADER;
+    public final static int NUM_BYTES_ARRAY_HEADER; //数组对象的对象头
 
     /**
      * A constant specifying the object alignment boundary inside the JVM. Objects will always take a full multiple of
      * this constant, possibly wasting some space.
      */
-    public final static int NUM_BYTES_OBJECT_ALIGNMENT;
+    public final static int NUM_BYTES_OBJECT_ALIGNMENT; //对齐字节
 
     /**
      * Sizes of primitive classes.
@@ -125,20 +125,20 @@ public class RamUsageEstimator {
     private static final Map<Class<?>, Integer> primitiveSizes = new IdentityHashMap<>();
 
     static {
-        primitiveSizes.put(boolean.class, 1);
+        primitiveSizes.put(boolean.class, 1); //boolean占用一个字节
         primitiveSizes.put(byte.class, 1);
-        primitiveSizes.put(char.class, Integer.valueOf(Character.BYTES));
-        primitiveSizes.put(short.class, Integer.valueOf(Short.BYTES));
-        primitiveSizes.put(int.class, Integer.valueOf(Integer.BYTES));
-        primitiveSizes.put(float.class, Integer.valueOf(Float.BYTES));
-        primitiveSizes.put(double.class, Integer.valueOf(Double.BYTES));
-        primitiveSizes.put(long.class, Integer.valueOf(Long.BYTES));
+        primitiveSizes.put(char.class, Integer.valueOf(Character.BYTES)); //2
+        primitiveSizes.put(short.class, Integer.valueOf(Short.BYTES)); //2
+        primitiveSizes.put(int.class, Integer.valueOf(Integer.BYTES)); //4
+        primitiveSizes.put(float.class, Integer.valueOf(Float.BYTES)); //4
+        primitiveSizes.put(double.class, Integer.valueOf(Double.BYTES)); //8
+        primitiveSizes.put(long.class, Integer.valueOf(Long.BYTES)); //8
     }
 
     /**
      * JVMs typically cache small longs. This tries to find out what the range is.
      */
-    static final long LONG_CACHE_MIN_VALUE, LONG_CACHE_MAX_VALUE;
+    static final long LONG_CACHE_MIN_VALUE, LONG_CACHE_MAX_VALUE; //jvm会缓存比较小的long
     static final int LONG_SIZE;
 
     /**
@@ -193,11 +193,11 @@ public class RamUsageEstimator {
             COMPRESSED_REFS_ENABLED = compressedOops;
             NUM_BYTES_OBJECT_ALIGNMENT = objectAlignment;
             // reference size is 4, if we have compressed oops:
-            NUM_BYTES_OBJECT_REF = COMPRESSED_REFS_ENABLED ? 4 : 8;
+            NUM_BYTES_OBJECT_REF = COMPRESSED_REFS_ENABLED ? 4 : 8;  //压缩引用
             // "best guess" based on reference size:
-            NUM_BYTES_OBJECT_HEADER = 8 + NUM_BYTES_OBJECT_REF;
+            NUM_BYTES_OBJECT_HEADER = 8 + NUM_BYTES_OBJECT_REF; //markword(8字节) + class对象引用
             // array header is NUM_BYTES_OBJECT_HEADER + NUM_BYTES_INT, but aligned (object alignment):
-            NUM_BYTES_ARRAY_HEADER = (int) alignObjectSize(NUM_BYTES_OBJECT_HEADER + Integer.BYTES);
+            NUM_BYTES_ARRAY_HEADER = (int) alignObjectSize(NUM_BYTES_OBJECT_HEADER + Integer.BYTES); //数组对象需要加上4个字节的数组长度
         } else {
             JVM_IS_HOTSPOT_64BIT = false;
             COMPRESSED_REFS_ENABLED = false;
@@ -371,13 +371,31 @@ public class RamUsageEstimator {
         if (len > 0) {
             Class<?> arrayElementClazz = array.getClass().getComponentType();
             if (arrayElementClazz.isPrimitive()) {
-                size += (long) len * primitiveSizes.get(arrayElementClazz);
+                size += (long) len * primitiveSizes.get(arrayElementClazz); //如果是基本数据类型数组，则直接计算
             } else {
-                size += (long) NUM_BYTES_OBJECT_REF * len;
+                size += (long) NUM_BYTES_OBJECT_REF * len;  //如果是对象数组，则只计算其引用大小
             }
         }
         return alignObjectSize(size);
     }
+
+
+    //todo: 共享字符串的问题
+    public static long sizeOfString(String s) {
+        if (s == null) {
+            return 0L;
+        }
+        long objSize = NUM_BYTES_OBJECT_HEADER + NUM_BYTES_OBJECT_REF + 4; //对象头 + 4 + hash ==> String对象的大小
+        objSize = alignObjectSize(objSize);
+
+        //加上char[]的大小
+        int valueLen = s.length();
+        long charSize = NUM_BYTES_OBJECT_HEADER + Character.BYTES * valueLen + 4; //对象头 + 数组内容 + 数据length字段
+        charSize = alignObjectSize(charSize);
+
+        return objSize + charSize;
+    }
+
 
     /**
      * This method returns the maximum representation size of an object. <code>sizeSoFar</code> is the object's size
