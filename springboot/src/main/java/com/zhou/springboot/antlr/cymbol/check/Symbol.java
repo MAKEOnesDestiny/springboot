@@ -2,7 +2,7 @@ package com.zhou.springboot.antlr.cymbol.check;
 
 public abstract class Symbol {
 
-    private String symbolName;
+    public String symbolName;
 
     public Symbol(String symbolName) {
         this.symbolName = symbolName;

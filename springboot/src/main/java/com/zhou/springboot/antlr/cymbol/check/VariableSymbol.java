@@ -11,7 +11,7 @@ public class VariableSymbol extends Symbol {
 
     @Override
     public String symbolName() {
-        return null;
+        return symbolName;
     }
 
     public String getExpression() {

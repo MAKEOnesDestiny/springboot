@@ -1,6 +1,7 @@
 package com.zhou.springboot.antlr.cymbol.check;
 
 import com.zhou.springboot.antlr.cymbol.CymbolBaseListener;
+import com.zhou.springboot.antlr.cymbol.CymbolParser.BlockContext;
 import com.zhou.springboot.antlr.cymbol.CymbolParser.FileContext;
 import com.zhou.springboot.antlr.cymbol.CymbolParser.FormalParameterContext;
 import com.zhou.springboot.antlr.cymbol.CymbolParser.FunctionDeclContext;
@@ -24,8 +25,15 @@ public class DefPhase extends CymbolBaseListener {
     }
 
     @Override
-    public void enterVarDecl(VarDeclContext ctx) {
-        //        currentScope.getVariableSymbols()
+    public void enterBlock(BlockContext ctx) {
+        Scope newScope = new LocalScope(currentScope);
+        currentScope = newScope;
+        scopes.put(ctx, currentScope);
+    }
+
+    @Override
+    public void exitBlock(BlockContext ctx) {
+        currentScope = currentScope.getParentScope();
     }
 
     @Override
