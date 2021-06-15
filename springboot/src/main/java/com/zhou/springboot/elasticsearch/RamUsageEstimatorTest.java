@@ -9,7 +9,7 @@ import org.junit.Test;
 public class RamUsageEstimatorTest {
 
     public static void main(String[] args) throws InterruptedException {
-        //        Thread.sleep(5000L);
+        //        Thread.sleep(5000L);   //线程休眠5s
         List<String> ss = new ArrayList<>();
 
         long used = 0L;

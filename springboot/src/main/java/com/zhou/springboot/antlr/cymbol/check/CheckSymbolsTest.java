@@ -29,8 +29,10 @@ public class CheckSymbolsTest {
         ParseTree pt = parser.file();
 
         ParseTreeWalker walker = new ParseTreeWalker();
+        DefPhase defPhase = new DefPhase();
+        walker.walk(defPhase, pt);
 
-//        walker.walk(collector, pt);
+        System.out.println();
     }
 
 }

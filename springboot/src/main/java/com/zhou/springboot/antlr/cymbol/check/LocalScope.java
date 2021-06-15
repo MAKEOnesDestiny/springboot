@@ -5,15 +5,20 @@ import java.util.List;
 
 public class LocalScope extends BaseScope {
 
-    List<String> symbols = new ArrayList<>();
+    List<Symbol> variableSymbols = new ArrayList<>();
+
+    public LocalScope(Scope parent) {
+        super(parent);
+    }
 
     @Override
-    public Scope getParentScope() {
-        return null;
+    public List<Symbol> getFunctionSymbols() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public List<Symbol> getVariableSymbols() {
-        return null;
+        return variableSymbols;
     }
+
 }

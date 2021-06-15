@@ -5,16 +5,21 @@ import java.util.List;
 
 public class GlobalScope extends BaseScope {
 
-    List<String> symbols = new ArrayList<>();
+    List<Symbol> functionSymbols = new ArrayList<>();
 
+    List<Symbol> variableSymbols = new ArrayList<>();
+
+    public GlobalScope(Scope parent) {
+        super(parent);
+    }
 
     @Override
-    public Scope getParentScope() {
-        return null;
+    public List<Symbol> getFunctionSymbols() {
+        return functionSymbols;
     }
 
     @Override
     public List<Symbol> getVariableSymbols() {
-        return null;
+        return variableSymbols;
     }
 }
