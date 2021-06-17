@@ -146,7 +146,7 @@ public class JSONParser extends Parser {
 		catch (RecognitionException re) {
 			_localctx.exception = re;
 			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+			_errHandler.recover(this, re);  //报告语法错误并且能够从错误中进行恢复
 		}
 		finally {
 			exitRule();

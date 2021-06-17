@@ -35,7 +35,7 @@ exprList: expr (',' expr)*; // 1,2,3
 TYPE: ('int'|'float'|'void');
 ID: LETTER (LETTER|DIGIT)*;
 fragment LETTER:[a-zA-Z];
-fragment DIGIT: '0'|[1-9][0-9]*;  //fragment一定要写
+fragment DIGIT: '0'|[1-9][0-9]*;  //fragment一定要写,数字开头不能为0
 STAT_END: ';';
 INT: '0'|[1-9]([0-9])*;
 
