@@ -8,7 +8,7 @@ member: 'int' ID ';'
         { System.out.println("var "+$ID.text);}
       | 'void' f=ID '('')' '{' expr* '}'
         { System.out.println("method: "+$f.text);}
-      ;,
+      ;
 expr: ID '(' ')' ';'
       { System.out.println("found expr: "+$ctx.getText());}
     ;
