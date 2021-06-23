@@ -46,6 +46,7 @@ public class MvcController {
         System.out.println(part.getContentType());
     }
 
+
     @RequestMapping("map")
     @ApiDoc("测试Map")
     public void testMap(@RequestBody @ParamInfo(complexInfo = MyMapInfo.class) Map map) {

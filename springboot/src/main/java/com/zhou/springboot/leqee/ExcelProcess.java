@@ -28,8 +28,8 @@ public class ExcelProcess {
     public void initTree() {
 //                readFile("/Users/hfzhou/Desktop/彩妆0422.json", "m");
 //                readFile("/Users/hfzhou/Desktop/护肤0413.json", "s");
-//        readFile("/Users/hfzhou/Desktop/通用维度0414.json", "g");
-        readFile("/Users/hfzhou/Desktop/香水0425-1.json", "p");
+        readFile("/Users/hfzhou/Desktop/g0621.json", "g");
+        readFile("/Users/hfzhou/Desktop/p0621.json", "p");
     }
 
     private void readFile(String filePath, String type) {
@@ -83,7 +83,8 @@ public class ExcelProcess {
         initTree();
         ExcelReadListener listener = new ExcelReadListener();
 //        EasyExcel.read("/Users/hfzhou/Desktop/练习511.xlsx", listener).sheet().doRead();
-        EasyExcel.read("/Users/hfzhou/Desktop/3label_chatting_perfume.xlsx", listener).sheet().doRead();
+//        EasyExcel.read("/Users/hfzhou/Desktop/3label_chatting_perfume.xlsx", listener).sheet().doRead();
+        EasyExcel.read("/Users/hfzhou/Desktop/3label_data_perfume_extra(1)(1).xlsx", listener).sheet().doRead();
 
         List<MatchResult> results = listener.results;
 
@@ -112,7 +113,8 @@ public class ExcelProcess {
 
         @Override
         public void invoke(Map<Integer, String> data, AnalysisContext context) {
-            String sentence = data.get(6); //sentence
+            //todo:
+            String sentence = data.get(5); //sentence
             List<MatchResult> results = leafTrees.stream().map(t -> {
                 String kw = t.matchKeyword(sentence);
                 if (kw != null) {
@@ -134,10 +136,10 @@ public class ExcelProcess {
                 emptyResult.set_id(data.get(2));
                 emptyResult.setShopId(data.get(3));
                 emptyResult.setChatperson(data.get(4));
-                emptyResult.setChatrecord(data.get(5));
-                emptyResult.setSentence(data.get(6));
+                emptyResult.setChatrecord(data.get(4));
+                emptyResult.setSentence(data.get(5));
                 emptyResult.setItemid_0(data.get(7));
-                emptyResult.setChattime(data.get(8));
+                emptyResult.setChattime(data.get(6));
 
                 this.results.add(emptyResult);
             } else {
@@ -156,10 +158,10 @@ public class ExcelProcess {
                     t.set_id(data.get(2));
                     t.setShopId(data.get(3));
                     t.setChatperson(data.get(4));
-                    t.setChatrecord(data.get(5));
-                    t.setSentence(data.get(6));
+                    t.setChatrecord(data.get(4));
+                    t.setSentence(data.get(5));
                     t.setItemid_0(data.get(7));
-                    t.setChattime(data.get(8));
+                    t.setChattime(data.get(6));
                 });
                 this.results.addAll(results);
                 regCount++;

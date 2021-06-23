@@ -40,7 +40,7 @@ public class MatchResult {
     private String chatPerson;
 
 
-    @ExcelProperty(value = "flagStatus", index = 1)
+    @ExcelProperty(value = "flag_status", index = 1)
     private String flagStatus;
     @ExcelProperty(value = "cate_code", index = 2)
     private String cateCode1;
@@ -48,11 +48,11 @@ public class MatchResult {
     private String _id;
     @ExcelProperty(value = "shopid", index = 4)
     private String shopId;
-    @ExcelProperty(value = "chatperson", index = 5)
+//    @ExcelProperty(value = "chatperson", index = 5)
     private String chatperson;
     @ExcelProperty(value = "chatrecord", index = 6)
     private String chatrecord;
-    @ExcelProperty(value = "itemid_0", index = 8)
+//    @ExcelProperty(value = "itemid_0", index = 8)
     private String itemid_0;
     @ExcelProperty(value = "chattime", index = 9)
     private String chattime;
