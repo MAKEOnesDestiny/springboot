@@ -1,10 +1,13 @@
-// Generated from /Users/hfzhou/IdeaProjects/springboot/springboot/src/main/java/com/zhou/springboot/dsl/Quality.g4 by ANTLR 4.9
+// Generated from /Users/hfzhou/IdeaProjects/springboot/springboot/src/main/java/com/zhou/springboot/dsl/qu/Quality.g4 by ANTLR 4.9
 package com.zhou.springboot.dsl.qu;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class QualityParser extends Parser {
@@ -14,9 +17,9 @@ public class QualityParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, DECIMAL=5, STRING=6, BOOLEAN=7, ID=8, 
-		ID2=9, WS=10, DELIMITER=11, MUL=12, DIV=13, ADD=14, SUB=15, AND=16, OR=17, 
-		GT=18, LT=19, GTE=20, LTE=21, EQ=22;
+		T__0=1, T__1=2, T__2=3, T__3=4, DECIMAL=5, BOOLEAN=6, ID=7, ID2=8, WS=9, 
+		DELIMITER=10, MUL=11, DIV=12, ADD=13, SUB=14, AND=15, OR=16, GT=17, LT=18, 
+		GTE=19, LTE=20, EQ=21;
 	public static final int
 		RULE_prog = 0, RULE_stat = 1, RULE_expr = 2, RULE_func = 3, RULE_column = 4;
 	private static String[] makeRuleNames() {
@@ -28,17 +31,17 @@ public class QualityParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'!'", "'('", "')'", "'.'", null, null, null, null, null, null, 
-			"';'", "'*'", "'/'", "'+'", "'-'", "'&'", "'||'", "'>'", "'<'", "'>='", 
-			"'<='", "'='"
+			null, "'!'", "'('", "')'", "'.'", null, null, null, null, null, "';'", 
+			"'*'", "'/'", "'+'", "'-'", "'&'", "'||'", "'>'", "'<'", "'>='", "'<='", 
+			"'='"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, "DECIMAL", "STRING", "BOOLEAN", "ID", "ID2", 
-			"WS", "DELIMITER", "MUL", "DIV", "ADD", "SUB", "AND", "OR", "GT", "LT", 
-			"GTE", "LTE", "EQ"
+			null, null, null, null, null, "DECIMAL", "BOOLEAN", "ID", "ID2", "WS", 
+			"DELIMITER", "MUL", "DIV", "ADD", "SUB", "AND", "OR", "GT", "LT", "GTE", 
+			"LTE", "EQ"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -631,6 +634,8 @@ public class QualityParser extends Parser {
 	}
 
 	public static class ColumnContext extends ParserRuleContext {
+		public Token table;
+		public Token field;
 		public List<TerminalNode> ID() { return getTokens(QualityParser.ID); }
 		public TerminalNode ID(int i) {
 			return getToken(QualityParser.ID, i);
@@ -665,36 +670,38 @@ public class QualityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(49);
-			_la = _input.LA(1);
-			if ( !(_la==ID || _la==ID2) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
-			setState(52);
+			setState(51);
 			_errHandler.sync(this);
-			_la = _input.LA(1);
-			if (_la==T__3) {
+			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
+			case 1:
 				{
-				setState(50);
-				match(T__3);
-				setState(51);
+				setState(49);
+				((ColumnContext)_localctx).table = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==ID || _la==ID2) ) {
-				_errHandler.recoverInline(this);
+					((ColumnContext)_localctx).table = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
 					_errHandler.reportMatch(this);
 					consume();
 				}
+				setState(50);
+				match(T__3);
 				}
+				break;
 			}
-
+			setState(53);
+			((ColumnContext)_localctx).field = _input.LT(1);
+			_la = _input.LA(1);
+			if ( !(_la==ID || _la==ID2) ) {
+				((ColumnContext)_localctx).field = (Token)_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -730,22 +737,22 @@ public class QualityParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\309\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27:\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4"+
 		"\3\4\3\4\3\4\3\4\5\4\34\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\3\4\7\4*\n\4\f\4\16\4-\13\4\3\5\3\5\3\5\3\5\3\5\3\6\3\6\3\6\5\6\67"+
-		"\n\6\3\6\2\3\6\7\2\4\6\b\n\2\7\3\2\16\17\3\2\20\21\3\2\22\23\3\2\24\30"+
-		"\3\2\n\13\2<\2\f\3\2\2\2\4\16\3\2\2\2\6\33\3\2\2\2\b.\3\2\2\2\n\63\3\2"+
-		"\2\2\f\r\5\4\3\2\r\3\3\2\2\2\16\17\5\6\4\2\17\20\7\r\2\2\20\5\3\2\2\2"+
-		"\21\22\b\4\1\2\22\23\7\3\2\2\23\34\5\6\4\13\24\25\7\4\2\2\25\26\5\6\4"+
-		"\2\26\27\7\5\2\2\27\34\3\2\2\2\30\34\7\7\2\2\31\34\7\t\2\2\32\34\5\b\5"+
-		"\2\33\21\3\2\2\2\33\24\3\2\2\2\33\30\3\2\2\2\33\31\3\2\2\2\33\32\3\2\2"+
-		"\2\34+\3\2\2\2\35\36\f\n\2\2\36\37\t\2\2\2\37*\5\6\4\13 !\f\t\2\2!\"\t"+
-		"\3\2\2\"*\5\6\4\n#$\f\b\2\2$%\t\4\2\2%*\5\6\4\t&\'\f\7\2\2\'(\t\5\2\2"+
-		"(*\5\6\4\b)\35\3\2\2\2) \3\2\2\2)#\3\2\2\2)&\3\2\2\2*-\3\2\2\2+)\3\2\2"+
-		"\2+,\3\2\2\2,\7\3\2\2\2-+\3\2\2\2./\7\n\2\2/\60\7\4\2\2\60\61\5\n\6\2"+
-		"\61\62\7\5\2\2\62\t\3\2\2\2\63\66\t\6\2\2\64\65\7\6\2\2\65\67\t\6\2\2"+
-		"\66\64\3\2\2\2\66\67\3\2\2\2\67\13\3\2\2\2\6\33)+\66";
+		"\4\3\4\7\4*\n\4\f\4\16\4-\13\4\3\5\3\5\3\5\3\5\3\5\3\6\3\6\5\6\66\n\6"+
+		"\3\6\3\6\3\6\2\3\6\7\2\4\6\b\n\2\7\3\2\r\16\3\2\17\20\3\2\21\22\3\2\23"+
+		"\27\3\2\t\n\2=\2\f\3\2\2\2\4\16\3\2\2\2\6\33\3\2\2\2\b.\3\2\2\2\n\65\3"+
+		"\2\2\2\f\r\5\4\3\2\r\3\3\2\2\2\16\17\5\6\4\2\17\20\7\f\2\2\20\5\3\2\2"+
+		"\2\21\22\b\4\1\2\22\23\7\3\2\2\23\34\5\6\4\13\24\25\7\4\2\2\25\26\5\6"+
+		"\4\2\26\27\7\5\2\2\27\34\3\2\2\2\30\34\7\7\2\2\31\34\7\b\2\2\32\34\5\b"+
+		"\5\2\33\21\3\2\2\2\33\24\3\2\2\2\33\30\3\2\2\2\33\31\3\2\2\2\33\32\3\2"+
+		"\2\2\34+\3\2\2\2\35\36\f\n\2\2\36\37\t\2\2\2\37*\5\6\4\13 !\f\t\2\2!\""+
+		"\t\3\2\2\"*\5\6\4\n#$\f\b\2\2$%\t\4\2\2%*\5\6\4\t&\'\f\7\2\2\'(\t\5\2"+
+		"\2(*\5\6\4\b)\35\3\2\2\2) \3\2\2\2)#\3\2\2\2)&\3\2\2\2*-\3\2\2\2+)\3\2"+
+		"\2\2+,\3\2\2\2,\7\3\2\2\2-+\3\2\2\2./\7\t\2\2/\60\7\4\2\2\60\61\5\n\6"+
+		"\2\61\62\7\5\2\2\62\t\3\2\2\2\63\64\t\6\2\2\64\66\7\6\2\2\65\63\3\2\2"+
+		"\2\65\66\3\2\2\2\66\67\3\2\2\2\678\t\6\2\28\13\3\2\2\2\6\33)+\65";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

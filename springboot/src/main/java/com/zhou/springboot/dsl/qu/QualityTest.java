@@ -3,6 +3,7 @@ package com.zhou.springboot.dsl.qu;
 import com.zhou.springboot.dsl.qu.QualityParser.AddSubContext;
 import com.zhou.springboot.dsl.qu.QualityParser.AndOrContext;
 import com.zhou.springboot.dsl.qu.QualityParser.BooleanContext;
+import com.zhou.springboot.dsl.qu.QualityParser.ColumnContext;
 import com.zhou.springboot.dsl.qu.QualityParser.CompareContext;
 import com.zhou.springboot.dsl.qu.QualityParser.DecimalContext;
 import com.zhou.springboot.dsl.qu.QualityParser.ExprContext;
@@ -175,10 +176,17 @@ public class QualityTest {
         public void exitFunction(FunctionContext ctx) {
             FuncContext fc = ctx.func();
             TerminalNode tn = fc.ID();
+            ColumnContext cc = fc.column();
+            String table = cc.table != null ? cc.table.getText() : null;
+            String field = cc.field.getText();
+            String content = table == null ? field : (table + "." + field);
+
             String v = tn.getSymbol().getText(); //v为函数名称
             switch (v) {
                 case "count":
-                    v = "select " + v + " from test.test_table where update_time between '2020-10-10' and '2020-10-10'";
+                    v = "select " + v + "(" + content + ")"
+                            + " from test.test_table where update_time between '2020-10-10' and "
+                            + "'2020-10-10'";
                     break;
                 case "enum":
                     v = "select " + v + " from test.test_table where update_time between '2020-10-10' and '2020-10-10'";

@@ -18,7 +18,7 @@ expr: '!' expr             # Not
 func: ID '(' column ')'
     ;
 
-column: (ID|ID2) ('.' (ID|ID2))?
+column: (table=(ID|ID2)'.')? field=(ID|ID2)
      ;
 
 DECIMAL: '-'? DIGIT+ '.' DIGIT+

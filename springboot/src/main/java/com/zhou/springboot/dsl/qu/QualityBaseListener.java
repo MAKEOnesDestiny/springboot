@@ -1,4 +1,4 @@
-// Generated from /Users/hfzhou/IdeaProjects/springboot/springboot/src/main/java/com/zhou/springboot/dsl/Quality.g4 by ANTLR 4.9
+// Generated from /Users/hfzhou/IdeaProjects/springboot/springboot/src/main/java/com/zhou/springboot/dsl/qu/Quality.g4 by ANTLR 4.9
 package com.zhou.springboot.dsl.qu;
 
 import org.antlr.v4.runtime.ParserRuleContext;
