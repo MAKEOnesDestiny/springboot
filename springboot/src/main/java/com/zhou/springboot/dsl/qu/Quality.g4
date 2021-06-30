@@ -1,7 +1,7 @@
 grammar Quality;
 
 prog: stat;
-stat: expr
+stat: expr DELIMITER
     ;
 expr: '!' expr             # Not
     | expr op=('*'|'/') expr  # MulDiv

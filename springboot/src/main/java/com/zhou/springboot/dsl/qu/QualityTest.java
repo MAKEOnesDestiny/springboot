@@ -27,7 +27,8 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 public class QualityTest {
 
     public static void main(String[] args) {
-        CharStream cs = CharStreams.fromString("(count(shop_id)+10)>>count(a.shop_name)&(count(shop_id)>10.11);");
+//        CharStream cs = CharStreams.fromString("(count(shop_id)+10)>count(a.shop_name)&(count(shop_id)>10.11)");
+        CharStream cs = CharStreams.fromString("Count(id)IsNull(from_currency_code)÷true=true");
         //        CharStream cs = CharStreams.fromString("!(count(shop_id)+10) > count(a.shop_name) & (count(shop_id)>10.11);");
         Lexer lexer = new QualityLexer(cs);
         CommonTokenStream cts = new CommonTokenStream(lexer);

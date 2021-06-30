@@ -143,6 +143,7 @@ public class QualityParser extends Parser {
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
+		public TerminalNode DELIMITER() { return getToken(QualityParser.DELIMITER, 0); }
 		public StatContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -170,6 +171,8 @@ public class QualityParser extends Parser {
 			{
 			setState(12);
 			expr(0);
+			setState(13);
+			match(DELIMITER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -405,7 +408,7 @@ public class QualityParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(24);
+			setState(25);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__0:
@@ -414,9 +417,9 @@ public class QualityParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(15);
-				match(T__0);
 				setState(16);
+				match(T__0);
+				setState(17);
 				expr(9);
 				}
 				break;
@@ -425,11 +428,11 @@ public class QualityParser extends Parser {
 				_localctx = new ParensContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(17);
-				match(T__1);
 				setState(18);
-				expr(0);
+				match(T__1);
 				setState(19);
+				expr(0);
+				setState(20);
 				match(T__2);
 				}
 				break;
@@ -438,7 +441,7 @@ public class QualityParser extends Parser {
 				_localctx = new DecimalContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(21);
+				setState(22);
 				match(DECIMAL);
 				}
 				break;
@@ -447,7 +450,7 @@ public class QualityParser extends Parser {
 				_localctx = new BooleanContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(22);
+				setState(23);
 				match(BOOLEAN);
 				}
 				break;
@@ -456,7 +459,7 @@ public class QualityParser extends Parser {
 				_localctx = new FunctionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(23);
+				setState(24);
 				func();
 				}
 				break;
@@ -464,7 +467,7 @@ public class QualityParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(40);
+			setState(41);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
@@ -472,16 +475,16 @@ public class QualityParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(38);
+					setState(39);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 					case 1:
 						{
 						_localctx = new MulDivContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(26);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(27);
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						setState(28);
 						((MulDivContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==MUL || _la==DIV) ) {
@@ -492,7 +495,7 @@ public class QualityParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(28);
+						setState(29);
 						expr(9);
 						}
 						break;
@@ -500,9 +503,9 @@ public class QualityParser extends Parser {
 						{
 						_localctx = new AddSubContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(29);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
 						setState(30);
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						setState(31);
 						((AddSubContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==ADD || _la==SUB) ) {
@@ -513,7 +516,7 @@ public class QualityParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(31);
+						setState(32);
 						expr(8);
 						}
 						break;
@@ -521,9 +524,9 @@ public class QualityParser extends Parser {
 						{
 						_localctx = new AndOrContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(32);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(33);
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						setState(34);
 						((AndOrContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==AND || _la==OR) ) {
@@ -534,7 +537,7 @@ public class QualityParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(34);
+						setState(35);
 						expr(7);
 						}
 						break;
@@ -542,9 +545,9 @@ public class QualityParser extends Parser {
 						{
 						_localctx = new CompareContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(35);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(36);
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						setState(37);
 						((CompareContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << GT) | (1L << LT) | (1L << GTE) | (1L << LTE) | (1L << EQ))) != 0)) ) {
@@ -555,14 +558,14 @@ public class QualityParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(37);
+						setState(38);
 						expr(6);
 						}
 						break;
 					}
 					} 
 				}
-				setState(42);
+				setState(43);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			}
@@ -609,13 +612,13 @@ public class QualityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(43);
-			match(ID);
 			setState(44);
-			match(T__1);
+			match(ID);
 			setState(45);
-			column();
+			match(T__1);
 			setState(46);
+			column();
+			setState(47);
 			match(T__2);
 			}
 		}
@@ -667,12 +670,12 @@ public class QualityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(50);
+			setState(51);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
 				{
-				setState(48);
+				setState(49);
 				((ColumnContext)_localctx).table = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==ID || _la==ID2) ) {
@@ -683,12 +686,12 @@ public class QualityParser extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(49);
+				setState(50);
 				match(T__3);
 				}
 				break;
 			}
-			setState(52);
+			setState(53);
 			((ColumnContext)_localctx).field = _input.LT(1);
 			_la = _input.LA(1);
 			if ( !(_la==ID || _la==ID2) ) {
@@ -734,22 +737,22 @@ public class QualityParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\279\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
-		"\3\4\3\4\3\4\5\4\33\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\7\4)\n\4\f\4\16\4,\13\4\3\5\3\5\3\5\3\5\3\5\3\6\3\6\5\6\65\n\6\3\6"+
-		"\3\6\3\6\2\3\6\7\2\4\6\b\n\2\7\3\2\r\16\3\2\17\20\3\2\21\22\3\2\23\27"+
-		"\3\2\t\n\2<\2\f\3\2\2\2\4\16\3\2\2\2\6\32\3\2\2\2\b-\3\2\2\2\n\64\3\2"+
-		"\2\2\f\r\5\4\3\2\r\3\3\2\2\2\16\17\5\6\4\2\17\5\3\2\2\2\20\21\b\4\1\2"+
-		"\21\22\7\3\2\2\22\33\5\6\4\13\23\24\7\4\2\2\24\25\5\6\4\2\25\26\7\5\2"+
-		"\2\26\33\3\2\2\2\27\33\7\7\2\2\30\33\7\b\2\2\31\33\5\b\5\2\32\20\3\2\2"+
-		"\2\32\23\3\2\2\2\32\27\3\2\2\2\32\30\3\2\2\2\32\31\3\2\2\2\33*\3\2\2\2"+
-		"\34\35\f\n\2\2\35\36\t\2\2\2\36)\5\6\4\13\37 \f\t\2\2 !\t\3\2\2!)\5\6"+
-		"\4\n\"#\f\b\2\2#$\t\4\2\2$)\5\6\4\t%&\f\7\2\2&\'\t\5\2\2\')\5\6\4\b(\34"+
-		"\3\2\2\2(\37\3\2\2\2(\"\3\2\2\2(%\3\2\2\2),\3\2\2\2*(\3\2\2\2*+\3\2\2"+
-		"\2+\7\3\2\2\2,*\3\2\2\2-.\7\t\2\2./\7\4\2\2/\60\5\n\6\2\60\61\7\5\2\2"+
-		"\61\t\3\2\2\2\62\63\t\6\2\2\63\65\7\6\2\2\64\62\3\2\2\2\64\65\3\2\2\2"+
-		"\65\66\3\2\2\2\66\67\t\6\2\2\67\13\3\2\2\2\6\32(*\64";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27:\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4"+
+		"\3\4\3\4\3\4\3\4\5\4\34\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
+		"\4\3\4\7\4*\n\4\f\4\16\4-\13\4\3\5\3\5\3\5\3\5\3\5\3\6\3\6\5\6\66\n\6"+
+		"\3\6\3\6\3\6\2\3\6\7\2\4\6\b\n\2\7\3\2\r\16\3\2\17\20\3\2\21\22\3\2\23"+
+		"\27\3\2\t\n\2=\2\f\3\2\2\2\4\16\3\2\2\2\6\33\3\2\2\2\b.\3\2\2\2\n\65\3"+
+		"\2\2\2\f\r\5\4\3\2\r\3\3\2\2\2\16\17\5\6\4\2\17\20\7\f\2\2\20\5\3\2\2"+
+		"\2\21\22\b\4\1\2\22\23\7\3\2\2\23\34\5\6\4\13\24\25\7\4\2\2\25\26\5\6"+
+		"\4\2\26\27\7\5\2\2\27\34\3\2\2\2\30\34\7\7\2\2\31\34\7\b\2\2\32\34\5\b"+
+		"\5\2\33\21\3\2\2\2\33\24\3\2\2\2\33\30\3\2\2\2\33\31\3\2\2\2\33\32\3\2"+
+		"\2\2\34+\3\2\2\2\35\36\f\n\2\2\36\37\t\2\2\2\37*\5\6\4\13 !\f\t\2\2!\""+
+		"\t\3\2\2\"*\5\6\4\n#$\f\b\2\2$%\t\4\2\2%*\5\6\4\t&\'\f\7\2\2\'(\t\5\2"+
+		"\2(*\5\6\4\b)\35\3\2\2\2) \3\2\2\2)#\3\2\2\2)&\3\2\2\2*-\3\2\2\2+)\3\2"+
+		"\2\2+,\3\2\2\2,\7\3\2\2\2-+\3\2\2\2./\7\t\2\2/\60\7\4\2\2\60\61\5\n\6"+
+		"\2\61\62\7\5\2\2\62\t\3\2\2\2\63\64\t\6\2\2\64\66\7\6\2\2\65\63\3\2\2"+
+		"\2\65\66\3\2\2\2\66\67\3\2\2\2\678\t\6\2\28\13\3\2\2\2\6\33)+\65";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

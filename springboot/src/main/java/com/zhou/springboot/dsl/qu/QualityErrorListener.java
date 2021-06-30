@@ -13,5 +13,6 @@ public class QualityErrorListener extends BaseErrorListener {
         System.out.println("charPositionInLine => " + charPositionInLine);
         System.out.println("offendingSymbol => " + offendingSymbol);
         System.out.println("message => " + msg);
+        throw new RuntimeException();
     }
 }
